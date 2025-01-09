@@ -21,7 +21,7 @@ return new class extends Migration
 
             // Külső kulcsok definiálása
             $table->foreign('felhasznalo_id')->references('azonosito')->on('users')->onDelete('cascade');
-            $table->foreign('vizi_leny_id')->references('vizi_leny_id')->on('vizi_lenyeks')->onDelete('cascade');
+            $table->foreign('vizi_leny_id')->references('vizi_leny_id')->on('vizilenyeks')->onDelete('cascade');
         });
     }
 

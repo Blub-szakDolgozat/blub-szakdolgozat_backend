@@ -15,6 +15,10 @@ class User extends Authenticatable
     public function isAdmin()  {
         return $this->role === 0;
     }
+    public function akvariums()
+    {
+        return $this->hasMany(Akvarium::class, 'felhasznalo_id');
+    }
 
     /**
      * The attributes that are mass assignable.

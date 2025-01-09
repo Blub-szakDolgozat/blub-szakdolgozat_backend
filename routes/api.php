@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VizilenyekController;
 use App\Http\Middleware\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,10 @@ Route::middleware('auth:sanctum')->get('/users/profile', [UserController::class,
 
 Route::post('/register',[RegisteredUserController::class, 'store']);
 Route::post('/login',[AuthenticatedSessionController::class, 'store']);
+
+
+// Lekérdezések with-es
+Route::get('/vizi-lenyek', [VizilenyekController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])
 ->group(function () {
