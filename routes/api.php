@@ -27,8 +27,13 @@ Route::post('/register',[RegisteredUserController::class, 'store']);
 Route::post('/login',[AuthenticatedSessionController::class, 'store']);
 
 
-// Lekérdezések with-es
-Route::get('/vizi-lenyek', [VizilenyekController::class, 'index']);
+// Vizi lények CRUD
+Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
+Route::post('/vizilenyekAdd',[VizilenyekController::class, 'store']);
+Route::post('/vizilenyekMegmutat/{id}',[VizilenyekController::class, 'show']);
+Route::put('/vizilenyek/{id}',[VizilenyekController::class, 'put']);
+Route::delete('/vizilenyekTorol/{id}',[VizilenyekController::class, 'destroy']);
+
 
 Route::middleware(['auth:sanctum'])
 ->group(function () {
