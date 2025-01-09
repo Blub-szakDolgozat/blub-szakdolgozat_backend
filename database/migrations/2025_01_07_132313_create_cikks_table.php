@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('cikks', function (Blueprint $table) {
             $table->id('cikk_id');
-            $table->varchar('cim',60) ->unique();
-            $table->varchar('kepek',255);
+            $table->string('cim',60) ->unique();
+            $table->string('kepek',255);
             $table->text('leiras');
-            $table->date('publikalva')->default('2025.01.07');
+            $table->date('publikalva')->default('2025-01-07');
             $table->timestamps();
         });
     }
