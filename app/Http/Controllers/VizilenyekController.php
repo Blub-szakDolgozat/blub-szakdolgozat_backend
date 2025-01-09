@@ -30,4 +30,16 @@ class VizilenyekController extends Controller
     public function destroy($id){
         Vizilenyek::find($id)->delete();
     }
+
+    public function withExample()
+    {
+
+        $viziLenyek = ViziLenyek::with('akvariumok')  
+            ->where('ritkasagi_szint', '⭐')           
+            ->get();                                 
+
+        return response()->json([
+            'data' => $viziLenyek
+        ]);
+    }
 }

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('akvariums', function (Blueprint $table) {
+        Schema::create('akvaria', function (Blueprint $table) {
             $table->unsignedBigInteger('felhasznalo_id'); 
             $table->unsignedBigInteger('vizi_leny_id'); 
             $table->timestamp('bekerules_ideje'); 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('akvariums');
+        Schema::dropIfExists('akvaria');
     }
 };

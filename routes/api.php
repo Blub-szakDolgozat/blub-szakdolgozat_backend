@@ -17,15 +17,13 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 
 //Felhasználó
-
+/* Hibásak:
 Route::post('/users/register', [UserController::class, 'register']);
 Route::post('/users/login', [UserController::class, 'login']);
 Route::middleware('auth:sanctum')->get('/users/profile', [UserController::class, 'profile']);
-
-
 Route::post('/register',[RegisteredUserController::class, 'store']);
 Route::post('/login',[AuthenticatedSessionController::class, 'store']);
-
+*/
 
 // Vizi lények CRUD
 Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
@@ -33,6 +31,11 @@ Route::post('/vizilenyekAdd',[VizilenyekController::class, 'store']);
 Route::post('/vizilenyekMegmutat/{id}',[VizilenyekController::class, 'show']);
 Route::put('/vizilenyek/{id}',[VizilenyekController::class, 'put']);
 Route::delete('/vizilenyekTorol/{id}',[VizilenyekController::class, 'destroy']);
+
+// lekérezések az alap lékérdezésekken kivül 7-8 db:
+
+// with-es lekérdezések 2-3 db:
+Route::get('/vizilenyek-with', [ViziLenyekController::class, 'withExample']);
 
 
 Route::middleware(['auth:sanctum'])
