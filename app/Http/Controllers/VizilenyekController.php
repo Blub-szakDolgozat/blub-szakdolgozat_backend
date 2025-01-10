@@ -9,12 +9,32 @@ class VizilenyekController extends Controller
 {
     public function index()
     {
-        return Vizilenyek::all();
+        $files = Vizilenyek::latest()->get();
+        return $files;
     }
     public function store(Request $request){
-        $record= new Vizilenyek();
-        $record->fill($request->all());
-        $record->save();
+        $request->validate([
+            'nev' => 'required',
+            'fajta' => 'required',
+            'ritkasagi_szint' => 'required',
+            'leiras' => 'required',
+            'kep' =>  'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $file = $request->file('kep'); 
+        $extension = $file->getClientOriginalName(); 
+        $imageName = time() . '.' . $extension; 
+        $file->move(public_path('kepek'), $imageName); 
+
+        $vizileny = new Vizilenyek(); 
+        $vizileny->kep = 'kepek/' . $imageName; 
+        $vizileny->nev = $request->nev; 
+        $vizileny->fajta = $request->fajta; 
+        $vizileny->ritkasagi_szint = $request->ritkasagi_szint;
+        $vizileny->leiras = $request->leiras; 
+
+        $vizileny->save(); 
+
+        return redirect()->route('vizilenyekadd')->with('success', 'Product created successfully.');
     }
     
     public function show(string $id){
