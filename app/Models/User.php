@@ -13,21 +13,31 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     public function isAdmin()  {
-        return $this->role === 0;
+        return $this->jogosultsagi_szint === 'admin';
     }
     public function akvariums()
     {
         return $this->hasMany(Akvarium::class, 'felhasznalo_id');
     }
 
+    protected $primaryKey = 'azonosito';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
      */
-        protected $fillable = [
-            'name', 'email', 'password',
-        ];
+    protected $fillable = [
+        'felhasznalonev',
+        'email',
+        'regi_jelszo',
+        'uj_jelszo',
+        'regisztracio_datum',
+        'valtozas_datum',
+        'profilkep',
+        'jogosultsagi_szint',
+    ];
+    
 
     /**
      * The attributes that should be hidden for serialization.

@@ -12,18 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id('azonosito'); 
-            $table->string('felhasznalonev', 255)->unique(); 
-            $table->string('email', 255)->unique(); 
-            $table->string('regi_jelszo', 255); 
-            $table->string('uj_jelszo', 255)->nullable(); 
-            $table->timestamp('regisztracio_datum'); 
-            $table->datetime('valtozas_datum'); 
-            $table->binary('profilkep'); 
-            $table->enum('jogosultsagi_szint', ['felhasznalo', 'admin'])->default('felhasznalo'); 
+            $table->id('azonosito');
+            $table->string('felhasznalonev', 255)->unique();  // Felhasznalonev mező
+            $table->string('email', 255)->unique();
+            $table->string('regi_jelszo', 255);
+            $table->string('uj_jelszo', 255)->nullable();
+            $table->timestamp('regisztracio_datum');
+            $table->datetime('valtozas_datum');
+            $table->binary('profilkep');
+            $table->enum('jogosultsagi_szint', ['felhasznalo', 'admin'])->default('felhasznalo');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
+            $table->timestamps();
         });
+        
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
