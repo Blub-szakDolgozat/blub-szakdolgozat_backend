@@ -16,8 +16,14 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
+            'felhasznalonev' => 'Test User',
             'email' => 'test@example.com',
+            'regi_jelszo' => '123456',
+            'uj_jelszo' => 'Abcde',
+            'regisztracio_datum'=> '2024-09-11',
+            'valtozas_datum' => now(),
+            'profilkep'=> '',
+            'jogosultsagi_szint' => 'felhasznalo',
         ]);
     }
 }
