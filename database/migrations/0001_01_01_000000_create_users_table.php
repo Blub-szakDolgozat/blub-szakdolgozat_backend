@@ -23,7 +23,7 @@ return new class extends Migration
             $table->enum('jogosultsagi_szint', ['felhasznalo', 'admin'])->default('felhasznalo');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('last_login_at')->nullable();
         });
         
 
