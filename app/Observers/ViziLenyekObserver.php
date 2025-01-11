@@ -5,6 +5,8 @@ namespace App\Observers;
 use App\Models\ViziLenyek;
 use Illuminate\Support\Facades\Log;
 
+//itt kezeljük a modell eseményeit, ez egy dedikált osztály
+// Akkor kel használni, ha egy modellt érintő műveleteknél ismétlődő műveleteket kell végrehajtani
 class ViziLenyekObserver
 {
 
