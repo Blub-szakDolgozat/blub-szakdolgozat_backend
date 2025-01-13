@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VizilenyekController;
@@ -8,6 +10,10 @@ use App\Http\Middleware\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+
+//bárki által elérhető
+Route::post('/register',[RegisteredUserController::class, 'store']);
+Route::post('/login',[AuthenticatedSessionController::class, 'store']);
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -17,13 +23,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 
 //Felhasználó
-/* Hibásak:
-Route::post('/users/register', [UserController::class, 'register']);
-Route::post('/users/login', [UserController::class, 'login']);
-Route::middleware('auth:sanctum')->get('/users/profile', [UserController::class, 'profile']);
-Route::post('/register',[RegisteredUserController::class, 'store']);
-Route::post('/login',[AuthenticatedSessionController::class, 'store']);
-*/
 
 // Vizi lények CRUD
 Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
