@@ -109,7 +109,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'jelszo' => 'required|string',
+            'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -118,7 +118,7 @@ class UserController extends Controller
 
         if (Auth::attempt([
             'email' => $request->email,
-            'jelszo' => $request->jelszo,
+            'password' => $request->password,
         ])) {
 
             $user = Auth::user();
