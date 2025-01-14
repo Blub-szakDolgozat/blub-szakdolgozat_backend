@@ -18,8 +18,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'felhasznalonev' => 'Test User',
             'email' => 'test@example.com',
-            'regi_jelszo' => '123456',
-            'uj_jelszo' => 'Abcde',
+            'jelszo' => 'Abcde',
             'regisztracio_datum'=> '2024-09-11',
             'valtozas_datum' => now(),
             'profilkep'=> '',
@@ -30,8 +29,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'felhasznalonev' => 'Test Admin',
             'email' => 'admin@example.com',
-            'regi_jelszo' => 'admin1234',
-            'uj_jelszo' => 'admin12345',
+            'jelszo' => 'admin12345',
             'regisztracio_datum'=> '2023-09-11',
             'valtozas_datum' => now(),
             'profilkep'=> '',
