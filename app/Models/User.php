@@ -46,7 +46,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
+        'regi_jelszo',
         'remember_token',
     ];
 
@@ -59,7 +59,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'regi_jelszo' => 'hashed',
         ];
     }
 

@@ -118,14 +118,14 @@ class UserController extends Controller
 
         if (Auth::attempt([
             'email' => $request->email,
-            'password' => $request->password,
+            'regi_jelszo' => $request->password,
         ])) {
 
             $user = Auth::user();
             return response()->json([
                 'message' => 'Sikeres bejelentkezés!',
                 'user' => $user,
-                'token' => $user->createToken('API Token')->plainTextToken // Token visszaküldése
+                'token' => $user->createToken('API Token')->plainTextToken 
             ]);
         }
 
