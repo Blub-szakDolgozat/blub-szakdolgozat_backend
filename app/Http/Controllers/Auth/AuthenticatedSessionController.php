@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
                 'user' => $user,
                 'status' => 'Login successful',
             ]);
-    
+
     }
 
     /**
