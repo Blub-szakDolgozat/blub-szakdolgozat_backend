@@ -25,5 +25,19 @@ class DatabaseSeeder extends Seeder
             'profilkep'=> '',
             'jogosultsagi_szint' => 'felhasznalo',
         ]);
+
+        
+        User::factory()->create([
+            'felhasznalonev' => 'Test Admin',
+            'email' => 'admin@example.com',
+            'regi_jelszo' => 'admin1234',
+            'uj_jelszo' => 'admin12345',
+            'regisztracio_datum'=> '2023-09-11',
+            'valtozas_datum' => now(),
+            'profilkep'=> '',
+            'jogosultsagi_szint' => 'admin',
+        ]);
+
+
     }
 }
