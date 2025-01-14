@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 255)->unique(); 
             $table->string('email', 255)->unique();
             $table->string('password', 255);
-            $table->timestamp('regisztracio_datum');
+            $table->timestamp('regisztracio_datum')->default(now());
             $table->datetime('valtozas_datum');
             $table->binary('profilkep')->nullable();
             $table->enum('jogosultsagi_szint', ['felhasznalo', 'admin'])->default('felhasznalo');
