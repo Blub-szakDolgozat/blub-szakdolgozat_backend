@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id('azonosito');
             $table->string('felhasznalonev', 255)->unique(); 
             $table->string('email', 255)->unique();
-            $table->string('regi_jelszo', 255);
-            $table->string('uj_jelszo', 255)->nullable();
+            $table->string('jelszo', 255);
             $table->timestamp('regisztracio_datum');
             $table->datetime('valtozas_datum');
             $table->binary('profilkep')->nullable();
