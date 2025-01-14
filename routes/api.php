@@ -86,3 +86,6 @@ Route::middleware(['auth:sanctum', Admin::class])
 ->group(function () {
     Route::get('/admin/users', [UserController::class, 'index']);
 });
+
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [AuthenticatedSessionController::class, 'store']); 

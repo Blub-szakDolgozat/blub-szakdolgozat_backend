@@ -96,7 +96,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->jelszo), 
+            'password' => Hash::make($request->password), 
         ]);
 
         return response()->json([
@@ -104,6 +104,7 @@ class UserController extends Controller
             'user' => $user
         ], 201);
     }
+    
     //Bejelentkezés
     public function login(Request $request)
     {
