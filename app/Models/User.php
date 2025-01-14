@@ -15,6 +15,7 @@ class User extends Authenticatable
     public function isAdmin()  {
         return $this->jogosultsagi_szint === 'admin';
     }
+    
     public function akvariums()
     {
         return $this->hasMany(Akvarium::class, 'felhasznalo_id');
@@ -61,4 +62,5 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
 }
