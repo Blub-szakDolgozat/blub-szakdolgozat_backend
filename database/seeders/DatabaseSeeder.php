@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'felhasznalonev' => 'Test User',
+            'name' => 'Test User',
             'email' => 'test@example.com',
-            'jelszo' => 'Abcde',
+            'password' => 'Abcde',
             'regisztracio_datum'=> '2024-09-11',
             'valtozas_datum' => now(),
             'profilkep'=> '',
@@ -27,9 +27,9 @@ class DatabaseSeeder extends Seeder
 
         
         User::factory()->create([
-            'felhasznalonev' => 'Test Admin',
+            'name' => 'Test Admin',
             'email' => 'admin@example.com',
-            'jelszo' => 'admin12345',
+            'password' => 'admin12345',
             'regisztracio_datum'=> '2023-09-11',
             'valtozas_datum' => now(),
             'profilkep'=> '',

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('azonosito');
-            $table->string('felhasznalonev', 255)->unique(); 
+            $table->string('name', 255)->unique(); 
             $table->string('email', 255)->unique();
-            $table->string('jelszo', 255);
+            $table->string('password', 255);
             $table->timestamp('regisztracio_datum');
             $table->datetime('valtozas_datum');
             $table->binary('profilkep')->nullable();
