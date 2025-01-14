@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->string('email', 255)->unique();
             $table->string('password', 255);
             $table->timestamp('regisztracio_datum')->default(now());
-            $table->datetime('valtozas_datum');
+            $table->datetime('valtozas_datum')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->binary('profilkep')->nullable();
             $table->enum('jogosultsagi_szint', ['felhasznalo', 'admin'])->default('felhasznalo');
             $table->timestamp('email_verified_at')->nullable();
