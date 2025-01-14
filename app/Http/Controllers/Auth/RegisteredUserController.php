@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 
@@ -23,13 +23,13 @@ class RegisteredUserController extends Controller
         $request->validate([
             'felhasznalonev' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'regi_jelszo' => ['required', 'confirmed', Rules\Password::defaults()],
+            'jelszo' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'felhasznalonev' => $request->name,
             'email' => $request->email,
-            'regi_jelszo' => Hash::make($request->password),
+            'jelszo' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
