@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Esemeny;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
-class EsemenyController extends Controller
+class VideoController extends Controller
 {
     // Alap lekérdezések
 
@@ -14,7 +14,7 @@ class EsemenyController extends Controller
      */
     public function index()
     {
-        return Esemeny::all();
+        return Video::all();
     }
 
     /**
@@ -22,7 +22,7 @@ class EsemenyController extends Controller
      */
     public function store(Request $request)
     {
-        $record = new Esemeny();
+        $record = new Video();
         $record->fill($request->all());
         $record->save();
     }
@@ -32,9 +32,9 @@ class EsemenyController extends Controller
      */
     public function show(string $id)
     {
-        $esemeny = Esemeny::where('esemény_id', $id)
+        $video = Video::where('video_id', $id)
         ->get();
-        return $esemeny;
+        return $video;
     }
 
     /**
@@ -42,7 +42,7 @@ class EsemenyController extends Controller
      */
     public function put(Request $request, string $id)
     {
-        $record = Esemeny::find($id);
+        $record = Video::find($id);
         $record -> fill($request ->all());
         $record ->save();
     }
@@ -52,7 +52,7 @@ class EsemenyController extends Controller
      */
     public function destroy($id)
     {
-        Esemeny::find($id)->delete();
+        Video::find($id)->delete();
     }
 
 }

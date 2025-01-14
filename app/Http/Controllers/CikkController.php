@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Esemeny;
+use App\Models\Cikk;
 use Illuminate\Http\Request;
 
-class EsemenyController extends Controller
+class CikkController extends Controller
 {
-    // Alap lekérdezések
+     // Alap lekérdezések
 
         /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Esemeny::all();
+        return Cikk::all();
     }
 
     /**
@@ -22,7 +22,7 @@ class EsemenyController extends Controller
      */
     public function store(Request $request)
     {
-        $record = new Esemeny();
+        $record = new Cikk();
         $record->fill($request->all());
         $record->save();
     }
@@ -32,9 +32,9 @@ class EsemenyController extends Controller
      */
     public function show(string $id)
     {
-        $esemeny = Esemeny::where('esemény_id', $id)
+        $cikk = Cikk::where('cikk_id', $id)
         ->get();
-        return $esemeny;
+        return $cikk;
     }
 
     /**
@@ -42,7 +42,7 @@ class EsemenyController extends Controller
      */
     public function put(Request $request, string $id)
     {
-        $record = Esemeny::find($id);
+        $record = Cikk::find($id);
         $record -> fill($request ->all());
         $record ->save();
     }
@@ -52,7 +52,6 @@ class EsemenyController extends Controller
      */
     public function destroy($id)
     {
-        Esemeny::find($id)->delete();
+        Cikk::find($id)->delete();
     }
-
 }

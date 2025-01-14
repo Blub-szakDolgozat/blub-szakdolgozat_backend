@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class AkvariumController extends Controller
 {
+
     //
 
 }
