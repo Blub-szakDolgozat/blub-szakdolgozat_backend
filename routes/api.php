@@ -12,8 +12,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register',[RegisteredUserController::class, 'store']);
-Route::post('/login',[AuthenticatedSessionController::class, 'store']);
 
 // Autentikált útvonal, simple user is:
 Route::middleware(['auth:sanctum'])
