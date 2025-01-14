@@ -55,13 +55,13 @@ class UserController extends Controller
     public function updatePassword(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "password" => 'string|min:3|max:50'
+            "regi_jelszo" => 'string|min:3|max:50'
         ]);
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->all()], 400);
         }
         $user = User::where("id", $id)->update([
-            "password" => Hash::make($request->password),
+            "regi_jelszo" => Hash::make($request->password),
         ]);
         return response()->json(["user" => $user]);
     }
@@ -83,9 +83,9 @@ class UserController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'felhasznalonev' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'regi_jelszo' => 'required|string|min:6|confirmed',
         ]);
 
         if ($validator->fails()) {
@@ -93,9 +93,9 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->name,
+            'felhasznalonev' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // A jelszó titkosítása
+            'regi_jelszo' => Hash::make($request->password), // A jelszó titkosítása
         ]);
 
         return response()->json([
@@ -108,7 +108,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string',
+            'regi_jelszo' => 'required|string',
         ]);
 
         if ($validator->fails()) {
