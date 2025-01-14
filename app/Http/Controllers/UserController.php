@@ -56,13 +56,13 @@ class UserController extends Controller
     public function updatePassword(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            "regi_jelszo" => 'string|min:3|max:50'
+            "jelszo" => 'string|min:3|max:50'
         ]);
         if ($validator->fails()) {
             return response()->json(["message" => $validator->errors()->all()], 400);
         }
         $user = User::where("id", $id)->update([
-            "regi_jelszo" => Hash::make($request->password),
+            "jelszo" => Hash::make($request->password),
         ]);
         return response()->json(["user" => $user]);
     }
@@ -86,7 +86,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'felhasznalonev' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'regi_jelszo' => 'required|string|min:6|confirmed',
+            'jelszo' => 'required|string|min:6|confirmed',
         ]);
 
         if ($validator->fails()) {
@@ -96,7 +96,7 @@ class UserController extends Controller
         $user = User::create([
             'felhasznalonev' => $request->name,
             'email' => $request->email,
-            'regi_jelszo' => Hash::make($request->password), // A jelszó titkosítása
+            'jelszo' => Hash::make($request->password), // A jelszó titkosítása
         ]);
 
         return response()->json([
@@ -109,7 +109,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'regi_jelszo' => 'required|string',
+            'jelszo' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -118,14 +118,14 @@ class UserController extends Controller
 
         if (Auth::attempt([
             'email' => $request->email,
-            'regi_jelszo' => $request->password,
+            'jelszo' => $request->password,
         ])) {
 
             $user = Auth::user();
             return response()->json([
                 'message' => 'Sikeres bejelentkezés!',
                 'user' => $user,
-                'token' => $user->createToken('API Token')->plainTextToken 
+                'token' => $user->createToken('API Token')->plainTextToken
             ]);
         }
 
