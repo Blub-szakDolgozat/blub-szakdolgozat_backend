@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VizilenyekController;
 use App\Http\Middleware\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,12 @@ Route::middleware(['auth:sanctum'])
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 });
 
+// Vizi lények CRUD
+Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
+Route::post('/vizilenyekAdd',[VizilenyekController::class, 'store']);
+Route::post('/vizilenyekMegmutat/{id}',[VizilenyekController::class, 'show']);
+Route::put('/vizilenyek/{id}',[VizilenyekController::class, 'put']);
+Route::delete('/vizilenyekTorol/{id}',[VizilenyekController::class, 'destroy']);
 
 // Admin útvonal
 Route::middleware(['auth:sanctum', Admin::class])
