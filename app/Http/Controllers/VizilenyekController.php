@@ -34,7 +34,7 @@ class VizilenyekController extends Controller
 
         $vizileny->save(); 
 
-        return redirect()->route('vizilenyekadd')->with('success', 'Product created successfully.');
+        return redirect()->route('vizilenyek.add')->with('success', 'Product created successfully.');
     }
     
     public function show(string $id){
