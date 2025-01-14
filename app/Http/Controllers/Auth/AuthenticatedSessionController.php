@@ -13,7 +13,7 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request): Response
     {
         $request->validate([
             'email' => ['required', 'string', 'email'],
@@ -35,10 +35,9 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request)
-{
-    	$request->user()->currentAccessToken()->delete();
+    public function destroy(Request $request): Response
+    {
+        $request->user()->currentAccessToken()->delete();
     	return response()->json(['message' => 'Logout successful']);
-}
-
+    }
 }
