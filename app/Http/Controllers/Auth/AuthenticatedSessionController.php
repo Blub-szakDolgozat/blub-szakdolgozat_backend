@@ -17,9 +17,9 @@ class AuthenticatedSessionController extends Controller
     {
         $request->validate([
             'email' => ['required', 'string', 'email'],
-                'regi_jelszo' => ['required', 'string'],
+                'jelszo' => ['required', 'string'],
             ]);
-    if (!Auth::attempt($request->only('email', 'regi_jelszo'))) {
+    if (!Auth::attempt($request->only('email', 'jelszo'))) {
                 return response()->json(['message' => 'Invalid login credentials'], 401);        }
             $user = Auth::user();
     $token = $user->createToken('auth_token')->plainTextToken;
