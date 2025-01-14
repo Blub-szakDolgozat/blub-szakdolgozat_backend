@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('uj_jelszo', 255)->nullable();
             $table->timestamp('regisztracio_datum');
             $table->datetime('valtozas_datum');
-            $table->binary('profilkep');
+            $table->binary('profilkep')->nullable();
             $table->enum('jogosultsagi_szint', ['felhasznalo', 'admin'])->default('felhasznalo');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

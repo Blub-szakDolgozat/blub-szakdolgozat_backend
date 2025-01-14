@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
             'profilkep'=> '',
             'jogosultsagi_szint' => 'felhasznalo',
         ]);
+        
     }
 }
