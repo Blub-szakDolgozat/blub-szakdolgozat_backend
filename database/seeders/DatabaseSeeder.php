@@ -25,9 +25,6 @@ class DatabaseSeeder extends Seeder
             'profilkep'=> '',
             'jogosultsagi_szint' => 'felhasznalo',
         ]);
-<<<<<<< HEAD
-        
-=======
 
         
         User::factory()->create([
@@ -42,6 +39,5 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
->>>>>>> 790e35f120b50bf77fb6a0d3aa4a5d89607eac68
     }
 }
