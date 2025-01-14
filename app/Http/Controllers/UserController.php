@@ -62,7 +62,7 @@ class UserController extends Controller
             return response()->json(["message" => $validator->errors()->all()], 400);
         }
         $user = User::where("id", $id)->update([
-            "jelszo" => Hash::make($request->password),
+            "jelszo" => Hash::make($request->jelszo),
         ]);
         return response()->json(["user" => $user]);
     }
@@ -94,9 +94,9 @@ class UserController extends Controller
         }
 
         $user = User::create([
-            'felhasznalonev' => $request->name,
+            'felhasznalonev' => $request->felhasznalonev,
             'email' => $request->email,
-            'jelszo' => Hash::make($request->password), // A jelszó titkosítása
+            'jelszo' => Hash::make($request->jelszo), 
         ]);
 
         return response()->json([
@@ -118,7 +118,7 @@ class UserController extends Controller
 
         if (Auth::attempt([
             'email' => $request->email,
-            'jelszo' => $request->password,
+            'jelszo' => $request->jelszo,
         ])) {
 
             $user = Auth::user();
