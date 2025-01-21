@@ -32,7 +32,7 @@ class EsemenyController extends Controller
      */
     public function show(string $id)
     {
-        $esemeny = Esemeny::where('esemény_id', $id)
+        $esemeny = Esemeny::where('esemeny_id', $id)
         ->get();
         return $esemeny;
     }

@@ -11,10 +11,10 @@ class Esemeny extends Model
     use HasFactory;
 
     protected $fillable = [
-        'esemény_neve',
-        'leírás',
-        'dátum',
-        'helyszín',
-        'létszám'
+        'esemeny_neve',
+        'leiras',
+        'datum',
+        'helyszin',
+        'letszam'
     ];
 }
