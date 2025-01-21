@@ -43,7 +43,7 @@ class VizilenyekController extends Controller
         return $doga;
     }
     
-    public function put(Request $request, string $id){
+    public function update(Request $request, string $id){
         $record=Vizilenyek::find($id);
         $record->fill($request->all());
         $record->save();

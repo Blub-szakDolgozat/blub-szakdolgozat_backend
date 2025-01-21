@@ -80,8 +80,8 @@ Route::middleware(['auth:sanctum'])
 // Vizi lények CRUD
 Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
 Route::post('/vizilenyek-add',[VizilenyekController::class, 'store'])->name('vizilenyek.add.store');
-Route::post('/vizilenyek-megmutat/{id}',[VizilenyekController::class, 'show']);
-Route::put('/vizilenyek/{id}',[VizilenyekController::class, 'put']);
+Route::get('/vizilenyek-megmutat/{id}',[VizilenyekController::class, 'show']);
+Route::put('/vizilenyek/{id}',[VizilenyekController::class, 'update']);
 Route::delete('/vizilenyek-torol/{id}',[VizilenyekController::class, 'destroy']);
 
 // Admin útvonal
