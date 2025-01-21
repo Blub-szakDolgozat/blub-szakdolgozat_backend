@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('feliratkozas', function (Blueprint $table) {
             $table->unsignedBigInteger('felhasznalo'); 
             $table->unsignedBigInteger('esemeny'); 
-            $table->timestamp('feliratkozás_dátuma')->nullable();
+            $table->timestamp('feliratkozas_datuma')->nullable();
 
             $table->primary(['felhasznalo', 'esemeny']);
 
             // Külső kulcsok definiálása
             $table->foreign('felhasznalo')->references('azonosito')->on('users')->onDelete('cascade');
-            $table->foreign('esemeny')->references('esemény_id')->on('esemenies')->onDelete('cascade');
+            $table->foreign('esemeny')->references('esemeny_id')->on('esemenies')->onDelete('cascade');
         });
     }
 

@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('esemenies', function (Blueprint $table) {
-            $table->id('esemény_id');
-            $table->string('esemény_neve');
-            $table->text('leírás');
-            $table->date('dátum');
-            $table->text('helyszín');
-            $table->integer('létszám');
+            $table->id('esemeny_id');
+            $table->string('esemeny_neve');
+            $table->text('leiras');
+            $table->date('datum');
+            $table->text('helyszin');
+            $table->integer('letszam');
             $table->timestamps();
         });
     }
