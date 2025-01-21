@@ -21,9 +21,9 @@ abstract class Controller
     // 2. Egy felhasználó összes feliratkozott eseménye
     public function userFeliratkozasai(string $user_id)
     {
-        $esemenyek = DB::table('feliratkozas as f') ->join('esemenies as e', 'f.esemeny', '=', 'e.esemény_id') 
+        $esemenyek = DB::table('feliratkozas as f') ->join('esemenies as e', 'f.esemeny', '=', 'e.esemeny_id') 
         ->where('f.felhasznalo', '=', $user_id)
-        ->get(['e.esemény_neve', 'e.dátum', 'e.helyszín']);
+        ->get(['e.esemeny_neve', 'e.datum', 'e.helyszin']);
 
         return $esemenyek;
     }
