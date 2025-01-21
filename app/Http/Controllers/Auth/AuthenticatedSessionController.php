@@ -36,8 +36,15 @@ class AuthenticatedSessionController extends Controller
      * Destroy an authenticated session.
      */
     public function destroy(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-    	return response()->json(['message' => 'Logout successful']);
+{
+    $token = $request->user()->currentAccessToken();
+    
+    // Ha van érvényes token, akkor töröljük, ha nincs, akkor nem csinálunk semmit
+    if ($token) {
+        $token->delete();
     }
+
+    return response()->json(['message' => 'Logout successful']);
+}
+
 }
