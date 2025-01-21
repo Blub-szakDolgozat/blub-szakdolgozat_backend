@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Vizilenyek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VizilenyekController extends Controller
 {
@@ -61,5 +62,14 @@ class VizilenyekController extends Controller
         return response()->json([
             'data' => $viziLenyek
         ]);
+    }
+    
+    // 6.	Összes vízi lény a legnagyobb ritkasági szinttel
+    public function ritkasagiSzint(){
+        $lenyek = DB::table('vizilenyeks') ->orderByDesc('ritkasagi_szint') 
+        ->select('nev', 'fajta', 'ritkasagi_szint')
+        ->get();
+
+        return $lenyek;
     }
 }

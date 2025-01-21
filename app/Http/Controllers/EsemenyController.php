@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Esemeny;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EsemenyController extends Controller
 {
@@ -53,6 +54,15 @@ class EsemenyController extends Controller
     public function destroy($id)
     {
         Esemeny::find($id)->delete();
+    }
+
+    
+    // 4. Egy eseményre való feliratkozások számának lekérdezése
+    public function esemenyLetszama(string $esemény_id){
+        $letszam = DB::table('feliratkozas as f') ->where('esemeny', '=', $esemény_id) 
+        ->count();
+
+        return $letszam;
     }
 
 }

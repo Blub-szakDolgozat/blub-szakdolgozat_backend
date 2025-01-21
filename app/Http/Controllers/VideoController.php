@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VideoController extends Controller
 {
@@ -55,4 +56,15 @@ class VideoController extends Controller
         Video::find($id)->delete();
     }
 
+    
+    // 8. Videók hossza csökkenő sorrendben
+    public function videokHossza(){
+        $videok = DB::table('videos') 
+        ->select('cim', 'hossz')
+        ->orderByDesc('hossz')
+        ->get();        
+        
+        return $videok;
+    }
+    
 }

@@ -146,4 +146,15 @@ class UserController extends Controller
             'user' => $user,
         ]);
     }
+
+    
+    //  7.	Felhasználók regisztrálási sorrendje:
+    public function regisztralasiSorrend(){
+        $felhasznalok = DB::table('users') 
+        ->select('name', 'email', 'regisztracio_datum')
+        ->orderByDesc('regisztracio_datum') 
+        ->get();
+
+        return $felhasznalok;
+    }
 }

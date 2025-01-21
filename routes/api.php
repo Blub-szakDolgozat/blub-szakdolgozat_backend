@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\AkvariumController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CikkController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\EsemenyController;
+use App\Http\Controllers\FeliratkozasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\VizilenyekController;
@@ -89,3 +92,12 @@ Route::middleware(['auth:sanctum', Admin::class])
 
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']); 
+
+Route::get('videok-hossza', [VideoController::class, 'videokHossza']); 
+Route::get('register-order', [UserController::class, 'regisztralasiSorrend']); 
+Route::get('ritkasagi-szint', [VizilenyekController::class, 'ritkasagiSzint']);
+Route::get('lenyek-csokkeno', [AkvariumController::class, 'viziLenyekCsokkenoSorrendben']);
+Route::get('esemenyre-feliratkozasok', [EsemenyController::class, 'esemenyLetszama']);
+Route::get('kik-iratkoztak-fel', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
+Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
+Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']); 
