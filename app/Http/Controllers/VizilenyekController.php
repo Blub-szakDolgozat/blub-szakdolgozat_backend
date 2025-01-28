@@ -54,7 +54,6 @@ class VizilenyekController extends Controller
 
     public function withExample()
     {
-
         $viziLenyek = ViziLenyek::with('akvariumok')  
             ->where('ritkasagi_szint', '⭐')           
             ->get();                                 

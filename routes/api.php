@@ -33,6 +33,7 @@ Route::get('/cikk-show/{cikk_id}', [CikkController::class, 'show']);
 
 //Cikk id alapján részlegesen frissítése:
 Route::put('/cikkek/{cikk_id}', [CikkController::class, 'put']);
+Route::get('/with-example', [VizilenyekController::class, 'withExample']);
 
 
 // Alap lekérdezések --> Esemény
