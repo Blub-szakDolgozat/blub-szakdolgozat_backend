@@ -14,7 +14,8 @@ class CikkController extends Controller
      */
     public function index()
     {
-        return Cikk::all();
+        $files = Cikk::latest()->get();
+        return $files;
     }
 
     /**
@@ -22,9 +23,25 @@ class CikkController extends Controller
      */
     public function store(Request $request)
     {
-        $record = new Cikk();
-        $record->fill($request->all());
-        $record->save();
+        $request->validate([
+            'cim' => 'required',
+            'leiras' => 'required',
+            'kepek' =>  'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $file = $request->file('kep'); 
+        $extension = $file->getClientOriginalName(); 
+        $imageName = time() . '.' . $extension; 
+        $file->move(public_path('kepek'), $imageName);
+
+        $vizileny = new Cikk(); 
+        $vizileny->kepek = 'kepek/' . $imageName; 
+        $vizileny->cim = $request->cim; 
+        $vizileny->publikalva = $request->publikalva; 
+        $vizileny->leiras = $request->leiras; 
+
+        $vizileny->save(); 
+
+        return redirect()->route('cikk.add')->with('success', 'Product created successfully.');
     }
 
     /**
