@@ -22,7 +22,7 @@ return new class extends Migration
         });
 
         DB::table('videos')->insert([
-            'cim' => 'Hogyan tarthatjuk távol a műanyagokat az óceánoktól?',
+            'cim' => 'Hogyan tarthatjuk távol a műanyagokat az óceánoktól? (angol nyelvű)',
             'link' => 'https://www.youtube.com/watch?v=HQTUWK7CM-Y',
             'hossz' => 190,
             'nyitokep' => 'kepek/video1.jpg',
@@ -30,10 +30,17 @@ return new class extends Migration
 
         
         DB::table('videos')->insert([
-            'cim' => 'Miért kell megállítani a műanyagszennyezést az óceánjainkban?',
+            'cim' => 'Miért kell megállítani a műanyagszennyezést az óceánjainkban? (angol nyelvű)',
             'link' => 'https://www.youtube.com/watch?v=Yomf5pBN8dY',
             'hossz' => 261,
             'nyitokep' => 'kepek/video2.jpg',
+        ]);
+                
+        DB::table('videos')->insert([
+            'cim' => 'Kik szennyezik műanyaggal az óceánokat? (angol nyelvű)',
+            'link' => 'https://www.youtube.com/watch?v=uRE_DndxwaA',
+            'hossz' => 977,
+            'nyitokep' => 'kepek/video3.jpg',
         ]);
     }
 
