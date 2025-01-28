@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Vizilenyek extends Model
 {
     use HasFactory;
+    protected $primaryKey = "vizi_leny_id";
     protected $fillable = [
         'nev', 'fajta','ritkasagi_szint','leiras', 'kep'
     ];
