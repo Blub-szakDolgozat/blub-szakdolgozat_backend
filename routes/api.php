@@ -72,7 +72,6 @@ Route::put('/videok/{video_id}', [VideoController::class, 'put']);
 // Autentikált útvonal, simple user is:
 Route::middleware(['auth:sanctum'])
 ->group(function () {
-
     // Kijelentkezés útvonal
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 });
