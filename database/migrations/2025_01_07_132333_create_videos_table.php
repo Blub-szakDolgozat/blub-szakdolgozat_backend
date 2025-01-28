@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,12 +14,27 @@ return new class extends Migration
     {
         Schema::create('videos', function (Blueprint $table) {
             $table->id('video_id');
-            $table->string('cim', 60)->unique();
+            $table->string('cim')->unique();
             $table->string('nyitokep',255);
             $table->string('link', 255);
             $table->integer('hossz');
             $table->timestamps();
         });
+
+        DB::table('videos')->insert([
+            'cim' => 'Hogyan tarthatjuk távol a műanyagokat az óceánoktól?',
+            'link' => 'https://www.youtube.com/watch?v=HQTUWK7CM-Y',
+            'hossz' => 190,
+            'nyitokep' => 'kepek/video1.jpg',
+        ]);
+
+        
+        DB::table('videos')->insert([
+            'cim' => 'Miért kell megállítani a műanyagszennyezést az óceánjainkban?',
+            'link' => 'https://www.youtube.com/watch?v=Yomf5pBN8dY',
+            'hossz' => 261,
+            'nyitokep' => 'kepek/video2.jpg',
+        ]);
     }
 
     /**

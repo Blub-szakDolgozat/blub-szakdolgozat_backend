@@ -15,7 +15,8 @@ class VideoController extends Controller
      */
     public function index()
     {
-        return Video::all();
+        $files = Video::latest()->get();
+        return $files;
     }
 
     /**
@@ -23,9 +24,26 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        $record = new Video();
-        $record->fill($request->all());
-        $record->save();
+        $request->validate([
+            'cim' => 'required',
+            'link' => 'required',
+            'hossz' => 'required',
+            'nyitokep' =>  'image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $file = $request->file('nyitokep'); 
+        $extension = $file->getClientOriginalName(); 
+        $imageName = time() . '.' . $extension; 
+        $file->move(public_path('kepek'), $imageName); 
+
+        $video = new Video(); 
+        $video->nyitokep = 'kepek/' . $imageName; 
+        $video->cim = $request->cim; 
+        $video->link = $request->link; 
+        $video->hossz = $request->hossz;
+
+        $video->save(); 
+
+        return redirect()->route('videok.add')->with('success', 'Product created successfully.');
     }
 
     /**

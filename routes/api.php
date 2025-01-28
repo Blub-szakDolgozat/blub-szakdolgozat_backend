@@ -57,7 +57,7 @@ Route::put('/esemenyek/{esemény_id}', [EsemenyController::class, 'put']);
 Route::get('/videok', [VideoController::class, 'index']);
 
 //Új videó hozzáadása:
-Route::post('/video-add', [VideoController::class, 'store']);
+Route::post('/video-add', [VideoController::class, 'store'])->name('videok.add.store');
 
 //videó id alapján törlése:
 Route::delete('/video-torol/{video_id}', [VideoController::class, 'destroy']);
