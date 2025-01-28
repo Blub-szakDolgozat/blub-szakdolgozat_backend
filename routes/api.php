@@ -23,7 +23,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/cikkek', [CikkController::class, 'index']);
 
 //Új cikk hozzáadása:
-Route::post('/cikk-add', [CikkController::class, 'store']);
+Route::post('/cikk-add', [CikkController::class, 'store'])->name('cikk.add.store');
 
 //Cikk id alapján törlése:
 Route::delete('/cikk-torol/{cikk_id}', [CikkController::class, 'destroy']);
