@@ -52,6 +52,13 @@ class UserController extends Controller
         User::find($id)->delete();
     }
 
+    public function getUser() {
+        $user = auth()->user();
+        return response()->json($user);  // A válaszban küldd vissza az összes szükséges adatot, beleértve a 'jogosultsagi_szint' értéket is
+    }
+    
+    
+
     //nem alap lekérdezések
     public function updatePassword(Request $request, $id)
     {

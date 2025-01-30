@@ -15,6 +15,15 @@ class User extends Authenticatable
     public function isAdmin()  {
         return $this->jogosultsagi_szint === 'admin';
     }
+
+    public function getAuthenticatedUser()
+    {
+        if (Auth::check()) {
+            return response()->json(Auth::user());
+        }
+
+        return response()->json(null, 401);
+    }
     
     public function akvariums()
     {
