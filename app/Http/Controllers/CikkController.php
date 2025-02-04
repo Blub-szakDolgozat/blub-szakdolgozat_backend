@@ -22,27 +22,33 @@ class CikkController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'cim' => 'required',
-            'leiras' => 'required',
-            'kepek' =>  'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-        $file = $request->file('kep'); 
-        $extension = $file->getClientOriginalName(); 
-        $imageName = time() . '.' . $extension; 
-        $file->move(public_path('kepek'), $imageName);
+{
+    $request->validate([
+        'cim' => 'required',
+        'leiras' => 'required',
+        'kepek' =>  'image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
 
-        $vizileny = new Cikk(); 
-        $vizileny->kepek = 'kepek/' . $imageName; 
-        $vizileny->cim = $request->cim; 
-        $vizileny->publikalva = $request->publikalva; 
-        $vizileny->leiras = $request->leiras; 
+    // Fájl ellenőrzése
+    if ($request->hasFile('kepek')) {
+        $file = $request->file('kepek');
+        $extension = $file->getClientOriginalExtension(); 
+        $imageName = time() . '.' . $extension;
+        $file->move(public_path('kepek'), $imageName); 
 
-        $vizileny->save(); 
+        $cikk = new Cikk();
+        $cikk->kepek = 'kepek/' . $imageName;
+        $cikk->cim = $request->cim;
+        $cikk->publikalva = $request->publikalva;
+        $cikk->leiras = $request->leiras;
 
-        return redirect()->route('cikk.add')->with('success', 'Product created successfully.');
+        $cikk->save();
+
+        return redirect()->route('cikk.add')->with('success', 'Cikk sikeresen létrehozva.');
+    } else {
+        return redirect()->route('cikk.add')->with('error', 'Nincs kiválasztott fájl!');
     }
+}
 
     /**
      * Display the specified resource.
