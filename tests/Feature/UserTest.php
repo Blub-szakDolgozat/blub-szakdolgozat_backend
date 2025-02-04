@@ -27,4 +27,11 @@ class UserTest extends TestCase
         $response = $this->actingAs($admin)->get('/api/users/'.$admin->id);
         $response->assertStatus(200);
     }
+    public function test_esemenyek() : void {
+        //$this->withoutExceptionHandling(); 
+        // create rögzíti az adatbázisban a felh-t
+        
+        $response = $this->get('/api/esemenyek/');
+        $response->assertStatus(200);
+    }
 }
