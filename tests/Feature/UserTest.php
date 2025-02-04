@@ -43,5 +43,21 @@ class UserTest extends TestCase
         $response = $this->get('/api/videok-hossza/');
         $response->assertStatus(200);
     }
+    public function test_video() : void {     
+        $response = $this->get('/api/videok/');
+        $response->assertStatus(200);
+    }
+    public function test_video_delete() : void {     
+        $response = $this->delete('/api/videok-torol/{video_id}');
+        $response->assertStatus(200);
+    }
+    public function test_video_show() : void {     
+        $response = $this->delete('/api/videok-torol/{video_id}');
+        $response->assertStatus(200);
+    }
+    public function test_video_put() : void {     
+        $response = $this->delete('/api/videok-torol/{video_id}');
+        $response->assertStatus(200);
+    }
 
 }
