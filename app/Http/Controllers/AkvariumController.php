@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Akvarium;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AkvariumController extends Controller
@@ -23,7 +24,8 @@ class AkvariumController extends Controller
         // Nem alap Lekérdezések
 
     // 1. Adott felhasználónak visszaadja az akváriumában lévő vízi lényeket:
-    public function userViziLenyei(string $user_id){
+    public function userViziLenyei(){
+        $user_id=Auth::id();
         $lenyek = DB::table('akvaria as a')
             ->join('vizilenyeks as v', 'a.vizi_leny_id', '=', 'v.vizi_leny_id')
             ->select('v.nev', 'v.fajta', 'v.ritkasagi_szint')
