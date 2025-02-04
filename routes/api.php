@@ -112,4 +112,5 @@ Route::get('lenyek-csokkeno', [AkvariumController::class, 'viziLenyekCsokkenoSor
 Route::get('esemenyre-feliratkozasok', [EsemenyController::class, 'esemenyLetszama']);
 Route::get('kik-iratkoztak-fel', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
 Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
-Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']); 
+
+Route::middleware('auth')->get('user-lenyei', [AkvariumController::class, 'userViziLenyei']);
