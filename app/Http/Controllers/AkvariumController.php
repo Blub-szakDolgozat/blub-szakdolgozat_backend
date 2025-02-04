@@ -23,7 +23,7 @@ class AkvariumController extends Controller
 
         // Nem alap Lekérdezések
 
-    // 1. Adott felhasználónak visszaadja az akváriumában lévő vízi lényeket:
+    // 1. Bejelentkezett felhasználónak visszaadja az akváriumában lévő vízi lényeket:
     public function userViziLenyei(){
         $user_id=Auth::id();
         $lenyek = DB::table('akvaria as a')
