@@ -4,7 +4,6 @@ use App\Http\Controllers\AkvariumController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CikkController;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\EsemenyController;
 use App\Http\Controllers\FeliratkozasController;
 use App\Http\Controllers\UserController;
@@ -84,12 +83,6 @@ Route::get('/video-show/{video_id}', [VideoController::class, 'show']);
 Route::put('/videok/{video_id}', [VideoController::class, 'put']);
 
 
-// Autentikált útvonal, simple user is:
-Route::middleware(['auth:sanctum'])
-->group(function () {
-    // Kijelentkezés útvonal
-    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
-});
 
 // Vizi lények CRUD
 Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
@@ -97,6 +90,8 @@ Route::post('/vizilenyek-add',[VizilenyekController::class, 'store'])->name('viz
 Route::get('/vizilenyek-megmutat/{id}',[VizilenyekController::class, 'show']);
 Route::put('/vizilenyek/{id}',[VizilenyekController::class, 'update']);
 Route::delete('/vizilenyek-torol/{id}',[VizilenyekController::class, 'destroy']);
+//akvarium
+Route::middleware('auth')->get('user-lenyei', [AkvariumController::class, 'userViziLenyei']);
 
 // Admin útvonal
 Route::middleware(['auth:sanctum', Admin::class])
@@ -106,7 +101,14 @@ Route::middleware(['auth:sanctum', Admin::class])
 
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']); 
+// Autentikált útvonal, simple user is:
+Route::middleware(['auth:sanctum'])
+->group(function () {
+    // Kijelentkezés útvonal
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
+});
 
+// Lekérdezések
 Route::get('videok-hossza', [VideoController::class, 'videokHossza']); 
 Route::get('register-order', [UserController::class, 'regisztralasiSorrend']); 
 Route::get('ritkasagi-szint', [VizilenyekController::class, 'ritkasagiSzint']);
@@ -115,4 +117,3 @@ Route::get('esemenyre-feliratkozasok', [EsemenyController::class, 'esemenyLetsza
 Route::get('kik-iratkoztak-fel', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
 Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
 
-Route::middleware('auth')->get('user-lenyei', [AkvariumController::class, 'userViziLenyei']);
