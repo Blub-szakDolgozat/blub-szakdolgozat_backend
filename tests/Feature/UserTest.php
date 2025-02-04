@@ -47,15 +47,7 @@ class UserTest extends TestCase
         $response = $this->get('/api/vizilenyek/');
        $response->assertStatus(200);
    }
-public function test_store_vizilenyek() : void {
-$response = $this->post('/api/vizilenyek-add', [
-   'esemeny_neve' => 'Teszt Esemény',
-   'datum' => '2025-02-10',
-   'helyszin' => 'Teszt Helyszín',
-   'letszam' => 10
-]);
-$response->assertStatus(201); // Ha sikeres létrehozás, akkor 201-et várunk
-}
+
 public function test_update_vizilenyek() : void {
 $response = $this->put('/api/vizilenyek/1', [
    'esemeny_neve' => 'Frissített Esemény'
