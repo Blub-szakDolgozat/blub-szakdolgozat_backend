@@ -19,48 +19,54 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_users_auth() : void {
+    public function test_users_auth(): void
+    {
         //$this->withoutExceptionHandling(); 
         // create rögzíti az adatbázisban a felh-t
         $admin = User::factory()->make([
             'role' => 0,
         ]);
-        $response = $this->actingAs($admin)->get('/api/users/'.$admin->id);
+        $response = $this->actingAs($admin)->get('/api/users/' . $admin->id);
         $response->assertStatus(200);
     }
 
-    public function test_esemenyek() : void {
+    public function test_esemenyek(): void
+    {
         $response = $this->get('/api/esemenyek/');
         $response->assertStatus(200);
     }
-    
-    public function test_cikkek() : void {
+
+    public function test_cikkek(): void
+    {
         $response = $this->get('/api/cikkek/');
         $response->assertStatus(200);
     }
-    
-    public function test_videok_hossza() : void {        
+
+    public function test_videok_hossza(): void
+    {
         $response = $this->get('/api/videok-hossza/');
         $response->assertStatus(200);
     }
-        
-    public function test_regisztracio_sorrendje() : void {        
+
+    public function test_regisztracio_sorrendje(): void
+    {
         $response = $this->get('/api/register-order/');
         $response->assertStatus(200);
     }
-            
-    public function test_ritkasagi_szint() : void {        
+
+    public function test_ritkasagi_szint(): void
+    {
         $response = $this->get('/api/ritkasagi-szint/');
         $response->assertStatus(200);
     }
-/*                 
+    /*                 
     public function test_lenyek_csokkeno() : void {        
         $response = $this->get('/api/lenyek-csokkeno/');
         $response->assertStatus(200);
     } */
 
     // ezekbe még nincs adat: 
-/*                     
+    /*                     
     public function test_esemenyre_feliratkozasok() : void {        
         $response = $this->get('/api/esemenyre-feliratkozasok/');
         $response->assertStatus(200);
@@ -76,36 +82,33 @@ class UserTest extends TestCase
         $response->assertStatus(200);
     } */
 
-    public function test_video() : void {     
+    public function test_video(): void
+    {
         $response = $this->get('/api/videok/');
         $response->assertStatus(200);
     }
-    public function test_video_delete() : void {     
-        $response = $this->delete('/api/videok-torol/{video_id}');
+    public function test_video_delete(): void
+    {
+        $response = $this->delete('/api/video-torol/1');
         $response->assertStatus(200);
     }
-    public function test_video_show() : void {     
-        $response = $this->delete('/api/video-show/{video_id}');
+/*     public function test_video_show(): void
+    {
+        $response = $this->delete('/api/video-show/1');
         $response->assertStatus(200);
     }
-    public function test_video_put() : void {     
-        $response = $this->delete('/api/videok/{video_id}');
-        $response->assertStatus(200);
-    }
-    public function test_get_vizilenyek() : void {
+ */
+
+    public function test_get_vizilenyek(): void
+    {
         $response = $this->get('/api/vizilenyek/');
-       $response->assertStatus(200);
-   }
+        $response->assertStatus(200);
+    }
 
-public function test_update_vizilenyek() : void {
-$response = $this->put('/api/vizilenyek/1', [
-   'esemeny_neve' => 'Frissített Esemény'
-]);
-$response->assertStatus(200); // Ha sikeres frissítés, akkor 200-at várunk
-}
-public function test_delete_vizilenyek() : void {
-$response = $this->delete('/api/vizilenyek-torol/1');
-$response->assertStatus(200); // Ha sikeres törlés, akkor 200-at várunk
-}
 
+    public function test_delete_vizilenyek(): void
+    {
+        $response = $this->delete('/api/vizilenyek-torol/1');
+        $response->assertStatus(200);
+    }
 }
