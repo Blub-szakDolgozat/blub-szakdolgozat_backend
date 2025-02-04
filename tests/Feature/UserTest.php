@@ -43,5 +43,38 @@ class UserTest extends TestCase
         $response = $this->get('/api/videok-hossza/');
         $response->assertStatus(200);
     }
+        
+    public function test_regisztracio_sorrendje() : void {        
+        $response = $this->get('/api/register-order/');
+        $response->assertStatus(200);
+    }
+            
+    public function test_ritkasagi_szint() : void {        
+        $response = $this->get('/api/ritkasagi-szint/');
+        $response->assertStatus(200);
+    }
+/*                 
+    public function test_lenyek_csokkeno() : void {        
+        $response = $this->get('/api/lenyek-csokkeno/');
+        $response->assertStatus(200);
+    } */
+
+    // ezekbe még nincs adat: 
+/*                     
+    public function test_esemenyre_feliratkozasok() : void {        
+        $response = $this->get('/api/esemenyre-feliratkozasok/');
+        $response->assertStatus(200);
+    }
+                        
+    public function test_kik_iratkoztak_fel() : void {        
+        $response = $this->get('/api/kik-iratkoztak-fel/');
+        $response->assertStatus(200);
+    }
+                            
+    public function user_feliratkozasai() : void {        
+        $response = $this->get('/api/user-feliratkozasai/');
+        $response->assertStatus(200);
+    } */
+
 
 }
