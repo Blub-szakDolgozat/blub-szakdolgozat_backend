@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -36,15 +37,12 @@ class AuthenticatedSessionController extends Controller
      * Destroy an authenticated session.
      */
     public function destroy(Request $request)
-{
-    $token = $request->user()->currentAccessToken();
-    
-    // Ha van érvényes token, akkor töröljük, ha nincs, akkor nem csinálunk semmit
-    if ($token) {
-        $token->delete();
+    {
+        $token = $request->user()->currentAccessToken();
+        if ($token instanceof PersonalAccessToken) {
+            $token->delete();
+        }
+        return response()->json(['message' => 'Logout successful']);
     }
-
-    return response()->json(['message' => 'Logout successful']);
-}
 
 }

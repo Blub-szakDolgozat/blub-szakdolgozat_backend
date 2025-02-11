@@ -42,6 +42,13 @@ return new class extends Migration
             'hossz' => 977,
             'nyitokep' => 'kepek/video3.jpg',
         ]);
+                        
+        DB::table('videos')->insert([
+            'cim' => 'Műanyag: áldás és átok (magyar nyelvű)',
+            'link' => 'https://www.youtube.com/watch?v=lsyx9TixReg',
+            'hossz' => 494,
+            'nyitokep' => 'kepek/video4.jpg',
+        ]);
     }
 
     /**
