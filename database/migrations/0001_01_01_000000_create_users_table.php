@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password', 255);
             $table->timestamp('regisztracio_datum')->default(now());
             $table->datetime('valtozas_datum')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->binary('profilkep')->nullable();
+            $table->string('profilkep')->nullable();
             $table->enum('jogosultsagi_szint', ['felhasznalo', 'admin'])->default('felhasznalo');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
