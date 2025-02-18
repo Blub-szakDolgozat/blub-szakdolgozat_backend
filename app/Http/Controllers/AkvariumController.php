@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Akvarium;
+use App\Models\Vizilenyek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -34,4 +35,41 @@ class AkvariumController extends Controller
         
         return $lenyek;
     }
+    // 2. Véletlenszerű vízi lény lekérése
+    public function randomViziLeny()
+    {
+        $viziLeny = Vizilenyek::inRandomOrder()->first();
+
+        if (!$viziLeny) {
+            return response()->json(['message' => 'Nincs elérhető vízi lény.'], 404);
+        }
+
+        return response()->json($viziLeny);
+    }
+
+    // 3. Sorsolt vízi lény hozzáadása a felhasználó akváriumához
+    public function hozzaadAkvariumhoz(Request $request)
+    {
+        $user = Auth::user();
+        $vizi_leny_id = $request->input('vizi_leny_id');
+
+        // Ellenőrzés: létezik-e már a felhasználó akváriumában ez a lény?
+        $lehetMarVan = Akvarium::where('felhasznalo_id', $user->id)
+            ->where('vizi_leny_id', $vizi_leny_id)
+            ->exists();
+
+        if ($lehetMarVan) {
+            return response()->json(['message' => 'Ez a vízi lény már az akváriumban van!'], 409);
+        }
+
+        // Ha nincs, mentjük
+        $akvarium = new Akvarium();
+        $akvarium->felhasznalo_id = $user->id;
+        $akvarium->vizi_leny_id = $vizi_leny_id;
+        $akvarium->bekerules_ideje = now();
+        $akvarium->save();
+
+        return response()->json(['message' => 'Sikeresen hozzáadva az akváriumhoz!']);
+    }
+
 }
