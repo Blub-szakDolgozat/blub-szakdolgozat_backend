@@ -57,9 +57,9 @@ class EsemenyController extends Controller
     }
 
     
-    // 4. Egy eseményre való feliratkozások számának lekérdezése
-    public function esemenyLetszama(string $esemény_id){
-        $letszam = DB::table('feliratkozas as f') ->where('esemeny', '=', $esemény_id) 
+    // 4. Adott eseményre való feliratkozások számának lekérdezése
+    public function esemenyLetszama(string $esemeny_id){
+        $letszam = DB::table('feliratkozas as f') ->where('esemeny', '=', $esemeny_id) 
         ->count();
 
         return $letszam;

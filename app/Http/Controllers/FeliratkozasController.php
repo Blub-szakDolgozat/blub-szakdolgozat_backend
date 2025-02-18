@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\DB;
 class FeliratkozasController extends Controller
 {
     
-    // 3.	Felirakotkozott felhasználók egy eseményre
-    public function esemenyreFeliratkozottak(string $esemény_id){
+    // 3. Adott eseményre kik iratkoztak fel
+    public function esemenyreFeliratkozottak(string $esemeny_id){
 
-        $felhasznalok = DB::table('feliratkozas as f') ->join('users as u', 'f.felhasznalo', '=', 'u.azonosító') 
+        $felhasznalok = DB::table('feliratkozas as f') ->join('users as u', 'f.felhasznalo', '=', 'u.azonosito') 
         ->select('u.name')
-        ->where('f.esemeny', '=', $esemény_id) 
+        ->where('f.esemeny', '=', $esemeny_id) 
         ->get();
 
         return $felhasznalok;
     }
 
     
-    // 2. Egy felhasználó összes feliratkozott eseménye
+    // 2. Adott felhasználó milyen eseményekre iratkozott fel
     public function userFeliratkozasai(string $user_id)
     {
         $esemenyek = DB::table('feliratkozas as f') ->join('esemenies as e', 'f.esemeny', '=', 'e.esemeny_id') 

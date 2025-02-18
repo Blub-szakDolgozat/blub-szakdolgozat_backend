@@ -30,6 +30,16 @@ return new class extends Migration
             'created_at' => now(),
             'updated_at' => now()
         ]);
+
+        DB::table('vizilenyeks')->insert([
+            'nev' => 'cápa',
+            'fajta' => 'cápa',
+            'ritkasagi_szint' => '⭐⭐⭐',
+            'leiras' => 'A jól ismert aranyhal, kis méretű és színes. Különböző változatai léteznek.',
+            'kep' => 'kepek/OIP.jpg',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
      }
 
     /**

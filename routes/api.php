@@ -112,8 +112,8 @@ Route::middleware(['auth:sanctum'])
 Route::get('videok-hossza', [VideoController::class, 'videokHossza']); 
 Route::get('register-order', [UserController::class, 'regisztralasiSorrend']); 
 Route::get('ritkasagi-szint', [VizilenyekController::class, 'ritkasagiSzint']);
-Route::get('lenyek-csokkeno', [AkvariumController::class, 'viziLenyekCsokkenoSorrendben']);
-Route::get('esemenyre-feliratkozasok', [EsemenyController::class, 'esemenyLetszama']);
-Route::get('kik-iratkoztak-fel', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
+Route::get('lenyek-csokkeno/{azonosito}', [AkvariumController::class, 'viziLenyekCsokkenoSorrendben']);
+Route::get('esemenyre-feliratkozasok/{esemeny_id}', [EsemenyController::class, 'esemenyLetszama']);
+Route::get('kik-iratkoztak-fel/{esemeny_id}', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
 Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
 
