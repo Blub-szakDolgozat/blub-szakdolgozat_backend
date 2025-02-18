@@ -93,6 +93,9 @@ Route::delete('/vizilenyek-torol/{id}',[VizilenyekController::class, 'destroy'])
 //akvarium
 Route::middleware('auth')->get('user-lenyei', [AkvariumController::class, 'userViziLenyei']);
 
+Route::post('/esemeny/{id}/feliratkozas', [FeliratkozasController::class, 'store']);
+Route::middleware('auth:sanctum')->delete('/esemeny/{esemeny_id}/feliratkozas', [FeliratkozasController::class, 'destroy']);
+
 // Admin útvonal
 Route::middleware(['auth:sanctum', Admin::class])
 ->group(function () {
