@@ -25,11 +25,6 @@ return new class extends Migration
             $table->foreign('vizi_leny_id')->references('vizi_leny_id')->on('vizilenyeks')->onDelete('cascade');
         });
 
-        DB::table('akvaria')->insert([
-            'felhasznalo_id' => 1,
-            'vizi_leny_id' => 1,
-            'bekerules_ideje' => '2025-02-17'
-        ]);
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Models\Esemeny;
 use App\Models\Feliratkozas;
 use App\Models\User;
 use App\Models\Video;
+use App\Models\Vizilenyek;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -148,8 +149,8 @@ class UserTest extends TestCase
 
     // Vízi lény törlése id alapján:
     public function test_delete_vizilenyek(): void
-    {
-        $response = $this->delete('/api/vizilenyek-torol/1');
+    {   $vizi_leny=Vizilenyek::factory()->create();
+        $response = $this->delete('/api/vizilenyek-torol/'.$vizi_leny->vizi_leny_id);
         $response->assertStatus(200);
     }
 

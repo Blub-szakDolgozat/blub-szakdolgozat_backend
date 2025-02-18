@@ -25,11 +25,6 @@ return new class extends Migration
             $table->foreign('esemeny')->references('esemeny_id')->on('esemenies')->onDelete('cascade');
         });
 
-        DB::table('feliratkozas')->insert([
-            'felhasznalo' => 1,
-            'esemeny' => 2,
-            'feliratkozas_datuma' => "2025-04-22",
-        ]);
     }
 
     /**

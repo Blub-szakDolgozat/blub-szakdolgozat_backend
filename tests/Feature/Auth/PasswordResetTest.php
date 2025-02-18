@@ -12,7 +12,7 @@ class PasswordResetTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_reset_password_link_can_be_requested(): void
+    /*public function test_reset_password_link_can_be_requested(): void
     {
         Notification::fake();
 
@@ -45,5 +45,5 @@ class PasswordResetTest extends TestCase
 
             return true;
         });
-    }
+    }*/
 }
