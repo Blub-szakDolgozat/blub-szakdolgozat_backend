@@ -9,4 +9,13 @@ class Feliratkozas extends Model
 {
     /** @use HasFactory<\Database\Factories\FeliratkozasFactory> */
     use HasFactory;
+
+    protected $primaryKey = ['felhasznalo', 'esemeny'];
+
+    protected $fillable = [
+        'felhasznalo', 
+        'esemeny', 
+        'feliratkozas_datuma',
+    ];
+    
 }

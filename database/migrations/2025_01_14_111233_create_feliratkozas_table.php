@@ -15,6 +15,7 @@ return new class extends Migration
             $table->unsignedBigInteger('felhasznalo'); 
             $table->unsignedBigInteger('esemeny'); 
             $table->timestamp('feliratkozas_datuma')->nullable();
+            $table->timestamps();  
 
             $table->primary(['felhasznalo', 'esemeny']);
 
