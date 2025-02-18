@@ -82,7 +82,7 @@ Route::get('/video-show/{video_id}', [VideoController::class, 'show']);
 //videó id alapján részlegesen frissítése:
 Route::put('/videok/{video_id}', [VideoController::class, 'put']);
 
-
+Route::get('/users', [UserController::class, 'index']);
 
 // Vizi lények CRUD
 Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
@@ -104,6 +104,7 @@ Route::middleware(['auth:sanctum', Admin::class])
 
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']); 
+
 // Autentikált útvonal, simple user is:
 Route::middleware(['auth:sanctum'])
 ->group(function () {
@@ -115,9 +116,9 @@ Route::middleware(['auth:sanctum'])
 Route::get('videok-hossza', [VideoController::class, 'videokHossza']); 
 Route::get('register-order', [UserController::class, 'regisztralasiSorrend']); 
 Route::get('ritkasagi-szint', [VizilenyekController::class, 'ritkasagiSzint']);
-Route::get('lenyek-csokkeno', [AkvariumController::class, 'viziLenyekCsokkenoSorrendben']);
-Route::get('esemenyre-feliratkozasok', [EsemenyController::class, 'esemenyLetszama']);
-Route::get('kik-iratkoztak-fel', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
+Route::get('lenyek-csokkeno/{azonosito}', [AkvariumController::class, 'viziLenyekCsokkenoSorrendben']);
+Route::get('esemenyre-feliratkozasok/{esemeny_id}', [EsemenyController::class, 'esemenyLetszama']);
+Route::get('kik-iratkoztak-fel/{esemeny_id}', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
 Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
 Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']); 
 

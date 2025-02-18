@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Esemeny;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,8 @@ class FeliratkozasFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'felhasznalo' => User::all()->random()->azonosito,
+        	'esemeny' => Esemeny::all()->random()->esemeny_id,
         ];
     }
 }

@@ -95,11 +95,20 @@ class FeliratkozasController extends Controller
             ->select('u.name')
             ->where('f.esemeny', '=', $esemény_id)
             ->get();
+    // 3. Adott eseményre kik iratkoztak fel
+    public function esemenyreFeliratkozottak(string $esemeny_id){
+
+        $felhasznalok = DB::table('feliratkozas as f') ->join('users as u', 'f.felhasznalo', '=', 'u.azonosito') 
+        ->select('u.name')
+        ->where('f.esemeny', '=', $esemeny_id) 
+        ->get();
 
         return $felhasznalok;
     }
 
     // Egy felhasználó összes feliratkozott eseménye
+    
+    // 2. Adott felhasználó milyen eseményekre iratkozott fel
     public function userFeliratkozasai(string $user_id)
     {
         $esemenyek = DB::table('feliratkozas as f')

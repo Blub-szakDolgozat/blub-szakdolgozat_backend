@@ -17,7 +17,11 @@ class EsemenyFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'esemeny_neve' => fake()->name(),
+            'leiras' => fake()->text(),
+            'datum' => fake()->date(),
+            'helyszin' => fake()->text(),
+            'letszam' => rand(100,800)
         ];
     }
 }
