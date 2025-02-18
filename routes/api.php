@@ -82,7 +82,7 @@ Route::get('/video-show/{video_id}', [VideoController::class, 'show']);
 //videó id alapján részlegesen frissítése:
 Route::put('/videok/{video_id}', [VideoController::class, 'put']);
 
-
+Route::get('/users', [UserController::class, 'index']);
 
 // Vizi lények CRUD
 Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
@@ -101,6 +101,7 @@ Route::middleware(['auth:sanctum', Admin::class])
 
 Route::post('register', [UserController::class, 'register']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']); 
+
 // Autentikált útvonal, simple user is:
 Route::middleware(['auth:sanctum'])
 ->group(function () {
@@ -116,4 +117,11 @@ Route::get('lenyek-csokkeno/{azonosito}', [AkvariumController::class, 'viziLenye
 Route::get('esemenyre-feliratkozasok/{esemeny_id}', [EsemenyController::class, 'esemenyLetszama']);
 Route::get('kik-iratkoztak-fel/{esemeny_id}', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
 Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
+Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']); 
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/random-vizi-leny', [AkvariumController::class, 'randomViziLeny']);
+    Route::post('/hozzaad-akvariumhoz', [AkvariumController::class, 'hozzaadAkvariumhoz']);
+    Route::get('/akvarium/{user_id}', [AkvariumController::class, 'userViziLenyei']);
+});
 

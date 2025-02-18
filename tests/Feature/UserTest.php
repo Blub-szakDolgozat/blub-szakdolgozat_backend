@@ -95,6 +95,11 @@ class UserTest extends TestCase
     // ----------------------------------------------------------------------------------------------------------------
     //User
     //index:
+    public function test_users(): void
+    {
+        $response = $this->get('/api/users/');
+        $response->assertStatus(200);
+    }
 
 
     //Felhasználók regisztrálási sorrendje:
