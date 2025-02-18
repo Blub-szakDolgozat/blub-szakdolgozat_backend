@@ -87,14 +87,6 @@ class FeliratkozasController extends Controller
         return response()->json(['message' => 'Sikeresen leiratkoztál az eseményről']);
     }
 
-    // Feliratkozott felhasználók egy eseményre
-    public function esemenyreFeliratkozottak(string $esemény_id)
-    {
-        $felhasznalok = DB::table('feliratkozas as f')
-            ->join('users as u', 'f.felhasznalo', '=', 'u.azonosito')
-            ->select('u.name')
-            ->where('f.esemeny', '=', $esemény_id)
-            ->get();
     // 3. Adott eseményre kik iratkoztak fel
     public function esemenyreFeliratkozottak(string $esemeny_id){
 
