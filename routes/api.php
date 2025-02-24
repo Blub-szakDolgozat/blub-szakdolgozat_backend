@@ -122,9 +122,6 @@ Route::get('kik-iratkoztak-fel/{esemeny_id}', [FeliratkozasController::class, 'e
 Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
 Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']); 
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/random-vizi-leny', [AkvariumController::class, 'randomViziLeny']);
-    Route::post('/hozzaad-akvariumhoz', [AkvariumController::class, 'hozzaadAkvariumhoz']);
-    Route::get('/akvarium/{user_id}', [AkvariumController::class, 'userViziLenyei']);
-});
+
+Route::middleware('auth:sanctum')->post('/napi-sorsolas', [VizilenyekController::class, 'napiSorsolas']);
 
