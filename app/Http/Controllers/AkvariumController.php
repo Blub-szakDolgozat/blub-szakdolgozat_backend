@@ -28,34 +28,46 @@ class AkvariumController extends Controller
     public function napiSorsolas()
     {
         $user = Auth::user();
-        $ma = now()->toDateString(); // A mai dátum
-    
-        // Ellenőrizzük, hogy a felhasználó már kapott-e aznap vízi lényt
+        $ma = now()->toDateString(); // mai dátum
+        
+        // felhasználó már kapott-e aznapra vízi lényt
         $kapottMarMa = Akvarium::where('felhasznalo_id', $user->id)
             ->whereDate('bekerules_ideje', $ma)
             ->exists();
-    
+        
         if ($kapottMarMa) {
             return response()->json(['message' => 'Már kaptál vízi lényt ma!'], 409);
         }
     
-        // Véletlenszerű vízi lény kiválasztása
-        $viziLeny = Vizilenyek::inRandomOrder()->first();
+        // random vízi lény sorsolás és ellenőrzés, hogy nincs-e már ilyen a felhasználónak
+        $viziLeny = null;
+        
+        // sorsolás újrapróbálásához, ha már van ilyen vízi lény az akváriumban
+        do {
+            $viziLeny = Vizilenyek::inRandomOrder()->first();
     
-        if (!$viziLeny) {
-            return response()->json(['message' => 'Nincs elérhető vízi lény.'], 404);
-        }
+            if (!$viziLeny) {
+                return response()->json(['message' => 'Nincs elérhető vízi lény.'], 404);
+            }
     
-        // Hozzáadás az akváriumhoz
+            // felhasználónak már van-e ilyen vízi lény az akváriumában
+            $marVan = Akvarium::where('felhasznalo_id', $user->id)
+                ->where('vizi_leny_id', $viziLeny->vizi_leny_id)
+                ->exists();
+    
+        } while ($marVan); // ha már van ilyen, újra próbáljuk
+    
+        // hozzáadás az akváriumhoz
         $akvarium = new Akvarium();
         $akvarium->felhasznalo_id = $user->id;
         $akvarium->vizi_leny_id = $viziLeny->vizi_leny_id;
         $akvarium->bekerules_ideje = now();
         $akvarium->save();
-    
+        
         return response()->json([
             'message' => 'Sikeres napi sorsolás!',
             'vizi_leny' => $viziLeny
         ]);
     }
+    
 }    
