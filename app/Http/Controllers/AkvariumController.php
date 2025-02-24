@@ -25,51 +25,37 @@ class AkvariumController extends Controller
         // Nem alap Lekérdezések
 
     // 1. Bejelentkezett felhasználónak visszaadja az akváriumában lévő vízi lényeket:
-    public function userViziLenyei(){
-        $user_id=Auth::id();
-        $lenyek = DB::table('akvaria as a')
-            ->join('vizilenyeks as v', 'a.vizi_leny_id', '=', 'v.vizi_leny_id')
-            ->select('v.nev', 'v.fajta', 'v.ritkasagi_szint')
-            ->where('a.felhasznalo_id', '=', $user_id)
-            ->get();
-        
-        return $lenyek;
-    }
-    // 2. Véletlenszerű vízi lény lekérése
-    public function randomViziLeny()
+    public function napiSorsolas()
     {
+        $user = Auth::user();
+        $ma = now()->toDateString(); // A mai dátum
+    
+        // Ellenőrizzük, hogy a felhasználó már kapott-e aznap vízi lényt
+        $kapottMarMa = Akvarium::where('felhasznalo_id', $user->id)
+            ->whereDate('bekerules_ideje', $ma)
+            ->exists();
+    
+        if ($kapottMarMa) {
+            return response()->json(['message' => 'Már kaptál vízi lényt ma!'], 409);
+        }
+    
+        // Véletlenszerű vízi lény kiválasztása
         $viziLeny = Vizilenyek::inRandomOrder()->first();
-
+    
         if (!$viziLeny) {
             return response()->json(['message' => 'Nincs elérhető vízi lény.'], 404);
         }
-
-        return response()->json($viziLeny);
-    }
-
-    // 3. Sorsolt vízi lény hozzáadása a felhasználó akváriumához
-    public function hozzaadAkvariumhoz(Request $request)
-    {
-        $user = Auth::user();
-        $vizi_leny_id = $request->input('vizi_leny_id');
-
-        // Ellenőrzés: létezik-e már a felhasználó akváriumában ez a lény?
-        $lehetMarVan = Akvarium::where('felhasznalo_id', $user->id)
-            ->where('vizi_leny_id', $vizi_leny_id)
-            ->exists();
-
-        if ($lehetMarVan) {
-            return response()->json(['message' => 'Ez a vízi lény már az akváriumban van!'], 409);
-        }
-
-        // Ha nincs, mentjük
+    
+        // Hozzáadás az akváriumhoz
         $akvarium = new Akvarium();
         $akvarium->felhasznalo_id = $user->id;
-        $akvarium->vizi_leny_id = $vizi_leny_id;
+        $akvarium->vizi_leny_id = $viziLeny->vizi_leny_id;
         $akvarium->bekerules_ideje = now();
         $akvarium->save();
-
-        return response()->json(['message' => 'Sikeresen hozzáadva az akváriumhoz!']);
+    
+        return response()->json([
+            'message' => 'Sikeres napi sorsolás!',
+            'vizi_leny' => $viziLeny
+        ]);
     }
-
-}
+}    
