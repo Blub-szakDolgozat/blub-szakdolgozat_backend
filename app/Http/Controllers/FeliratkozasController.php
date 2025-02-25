@@ -13,29 +13,25 @@ class FeliratkozasController extends Controller
     // Feliratkozás eseményre
     public function store(Request $request)
     {
-        // Ellenőrizzük, hogy a felhasználó be van-e jelentkezve
-        $felhasznaloId = auth()->id();  // Feltételezzük, hogy a felhasználó be van jelentkezve
-        if (!$felhasznaloId) {
-            return response()->json(['error' => 'Nem vagy bejelentkezve'], 401); // Nem engedjük feliratkozni, ha nincs bejelentkezve
-        }
+        $validated = $request->validate([
+            'esemeny_id' => 'required|integer|exists:esemenies,esemeny_id', // Ha integer, nincs szükség stringre
+        ]);
     
-        // Ellenőrizzük, hogy létezik-e a kérésben az esemény ID
-        $esemenyId = $request->input('esemeny_id'); // vagy $request->route('id') URL paramétereknél
-    
-        if (!$esemenyId) {
-            return response()->json(['error' => 'Esemény ID nem található'], 400);
-        }
-    
-        // Ellenőrizzük, hogy az esemény létezik-e
+        $esemenyId = $validated['esemeny_id'];
+        
+        // Esemény keresése
         $esemeny = Esemeny::find($esemenyId);
         if (!$esemeny) {
             return response()->json(['error' => 'Esemény nem található'], 404);
         }
     
+        // További kód a feliratkozás kezelésére
+        $felhasznaloId = $request->user()->id;  // Feltételezve, hogy a felhasználói azonosítót így szerzed be
+    
         // Ellenőrizzük, hogy a felhasználó már feliratkozott-e
         $existingSubscription = Feliratkozas::where('felhasznalo', $felhasznaloId)
-                                                ->where('esemeny', $esemenyId)
-                                                ->first();
+                                            ->where('esemeny', $esemenyId)
+                                            ->first();
         if ($existingSubscription) {
             return response()->json(['error' => 'Már feliratkoztál erre az eseményre.'], 400);
         }
@@ -51,7 +47,7 @@ class FeliratkozasController extends Controller
         $esemeny->increment('letszam');
     
         return response()->json(['message' => 'Sikeres feliratkozás!'], 200);
-    }
+    } 
     
 
     // Feliratkozás törlése
