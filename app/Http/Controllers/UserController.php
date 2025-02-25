@@ -34,15 +34,7 @@ class UserController extends Controller
         return User::find($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $user = User::find($id);
-        $user->fill($request->all());
-        $user->save();
-    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -52,15 +44,63 @@ class UserController extends Controller
         User::find($id)->delete();
     }
 
-    public function getUser() {
+    public function getUser()
+    {
         $user = auth()->user();
-        return response()->json($user);  // A válaszban küldd vissza az összes szükséges adatot, beleértve a 'jogosultsagi_szint' értéket is
+        return response()->json([
+            'message' => 'Sikeres adatlekérés.',
+            'user' => $user // Ezzel visszaküldöd az összes szükséges adatot.
+        ]);
     }
-    
-    
+
+
+
+    // app/Http/Controllers/UserController.php
+
+    public function update(Request $request, $userId)
+    {
+        // Felhasználó keresése az id alapján
+        $user = User::find($userId);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        // Az új adatok validálása
+        $request->validate([
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'password' => 'nullable|string|min:8',
+            'profilkep' => 'nullable|url',
+        ]);
+
+        // Az adatok frissítése
+        if ($request->has('name')) {
+            $user->name = $request->name;
+        }
+        if ($request->has('email')) {
+            $user->email = $request->email;
+        }
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        if ($request->has('profilkep')) {
+            $user->profilkep = $request->profilkep;
+        }
+
+        // Mentés
+        $user->save();
+
+        return response()->json(['user' => $user]);
+    }
+
+
+
+
+
+
 
     //nem alap lekérdezések
-    public function updatePassword(Request $request, $id)
+    /* public function updatePassword(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             "password" => 'string|min:3|max:50'
@@ -72,18 +112,20 @@ class UserController extends Controller
             "password" => Hash::make($request->jelszo),
         ]);
         return response()->json(["user" => $user]);
-    }
+    } */
 
-    function userLendings(){
-        $user=Auth::user();
+    function userLendings()
+    {
+        $user = Auth::user();
         return User::with('userandlendingsdata')
-        ->where('id','=', $user->id)
-        ->get();
+            ->where('id', '=', $user->id)
+            ->get();
     }
 
-    public function usersWithReservations(){
+    public function usersWithReservations()
+    {
         return User::with('usersAndReservations')
-        ->get();
+            ->get();
     }
 
 
@@ -103,7 +145,7 @@ class UserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password), 
+            'password' => Hash::make($request->password),
         ]);
 
         return response()->json([
@@ -111,7 +153,7 @@ class UserController extends Controller
             'user' => $user
         ], 201);
     }
-    
+
     //Bejelentkezés
     public function login(Request $request)
     {
@@ -147,21 +189,85 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['message' => 'Nem vagy bejelentkezve.'], 401);
         }
-        
+
         return response()->json([
             'message' => 'Sikeres lekérés.',
             'user' => $user,
         ]);
     }
 
-    
+
     //  7.	Felhasználók regisztrálási sorrendje:
-    public function regisztralasiSorrend(){
-        $felhasznalok = DB::table('users') 
-        ->select('name', 'email', 'regisztracio_datum')
-        ->orderByDesc('regisztracio_datum') 
-        ->get();
+    public function regisztralasiSorrend()
+    {
+        $felhasznalok = DB::table('users')
+            ->select('name', 'email', 'regisztracio_datum')
+            ->orderByDesc('regisztracio_datum')
+            ->get();
 
         return $felhasznalok;
+    }
+
+    public function updateUsername(Request $request, $id)
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->username;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Felhasználónév frissítve.',
+            'user' => $user,
+        ]);
+    }
+
+    public function updateEmail(Request $request, $id)
+    {
+        $request->validate([
+            'email' => 'required|email|max:255',
+        ]);
+
+        $user = User::find($id);
+        $user->email = $request->email;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Email cím frissítve.',
+            'user' => $user,
+        ]);
+    }
+
+    public function updateProfilePic(Request $request, $id)
+    {
+        $request->validate([
+            'profilkep' => 'required|url',
+        ]);
+
+        $user = User::find($id);
+        $user->profilkep = $request->profilkep;
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profilkép frissítve.',
+            'user' => $user,
+        ]);
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $request->validate([
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = User::find($id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Jelszó frissítve.',
+        ]);
     }
 }

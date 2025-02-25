@@ -31,6 +31,15 @@ Route::middleware(['auth:sanctum'])
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
         return $request->user();
 });
+
+Route::post('/update-username', [UserController::class, 'updateUsername']);
+Route::post('/update-email', [UserController::class, 'updateEmail']);
+Route::post('/update-profile-pic', [UserController::class, 'updateProfilePic']);
+Route::post('/update-password', [UserController::class, 'updatePassword']);
+Route::post('/update-user/{user}', [UserController::class, 'update'])->name('update-user');
+
+
+
 // Alap lekérdezések --> Cikk
 // Cikkeklekérdezése:
 Route::get('/cikkek', [CikkController::class, 'index']);
