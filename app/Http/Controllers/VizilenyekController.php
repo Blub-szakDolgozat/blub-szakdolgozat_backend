@@ -72,41 +72,5 @@ class VizilenyekController extends Controller
         return $lenyek;
     }
 
-    public function randomViziLeny(){
-        $random = Vizilenyek::inRandomOrder()->first(); 
-
-        return response()->json([
-        'data' => $random
-        ]);
-    }
-
-    public function sorsolHozzaad()
-    {
-        // Get a random water creature from the Vizilenyek table
-        $randomViziLeny = Vizilenyek::inRandomOrder()->first();
-    
-        if ($randomViziLeny) {
-            // Get the current user's ID (assuming user is authenticated)
-            $userId = auth()->user()->azonosito;
-    
-            // Add the random water creature to the akvarium table
-            DB::table('akvaria')->insert([
-                'felhasznalo_id' => $userId,
-                'vizi_leny_id' => $randomViziLeny->vizi_leny_id,
-                'bekerules_ideje' => now(),
-            ]);
-    
-            // Return a success response with the added water creature
-            return response()->json([
-                'message' => 'Random water creature added to aquarium.',
-                'vizi_leny' => $randomViziLeny,
-            ]);
-        }
-    
-        // If no water creature was found
-        return response()->json([
-            'message' => 'No water creature found.',
-        ], 404);
-    }
     
 }

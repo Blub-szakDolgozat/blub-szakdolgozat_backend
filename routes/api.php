@@ -135,6 +135,6 @@ Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratko
 Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']); 
 
 
-Route::middleware('auth:sanctum')->post('/napi-sorsolas', [VizilenyekController::class, 'napiSorsolas']);
-Route::middleware('auth:sanctum')->get('/random-vizi-leny', [VizilenyekController::class, 'randomViziLeny']);
-Route::middleware('auth:sanctum')->post('/akvarium/sorsol-hozzaad', [VizilenyekController::class, 'sorsolHozzaad']);
+Route::middleware('auth:sanctum')->post('/napi-sorsolas', [AkvariumController::class, 'napiSorsolas']);
+Route::middleware('auth:sanctum')->get('/random-vizi-leny', [AkvariumController::class, 'randomViziLeny']);
+Route::middleware('auth:sanctum')->post('/akvarium/sorsol-hozzaad', [AkvariumController::class, 'sorsolHozzaad']);

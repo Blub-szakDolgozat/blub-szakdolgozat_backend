@@ -25,6 +25,65 @@ class AkvariumController extends Controller
         // Nem alap Lekérdezések
 
     // 1. Bejelentkezett felhasználónak visszaadja az akváriumában lévő vízi lényeket:
+    public function userViziLenyei(){
+        $user_id=Auth::id();
+        $lenyek = DB::table('akvaria as a')
+            ->join('vizilenyeks as v', 'a.vizi_leny_id', '=', 'v.vizi_leny_id')
+            ->select('v.nev', 'v.fajta', 'v.ritkasagi_szint')
+            ->where('a.felhasznalo_id', '=', $user_id)
+            ->get();
+        
+        return $lenyek;
+    }
+
+    public function randomViziLeny(){
+        $random = Vizilenyek::inRandomOrder()->first(); 
+
+        return response()->json([
+        'data' => $random
+        ]);
+    }
+
+    public function sorsolHozzaad()
+    {
+        $randomViziLeny = Vizilenyek::inRandomOrder()->first();
+        
+        if ($randomViziLeny) {
+            $userId = auth()->user()->azonosito;
+    
+            $existsInAquarium = DB::table('akvaria')
+                ->where('felhasznalo_id', $userId)
+                ->where('vizi_leny_id', $randomViziLeny->vizi_leny_id)
+                ->exists();
+    
+            if (!$existsInAquarium) {
+                DB::table('akvaria')->insert([
+                    'felhasznalo_id' => $userId,
+                    'vizi_leny_id' => $randomViziLeny->vizi_leny_id,
+                    'bekerules_ideje' => now(),
+                ]);
+
+                return response()->json([
+                    'message' => 'Vízi lény hozzáadva az akváriumhoz',
+                    'vizi_leny' => $randomViziLeny,
+                ]);
+            } else {
+
+                return response()->json([
+                    'message' => 'Ez a vízi lény már benne van az akváriumodban',
+                ]);
+            }
+        }
+    
+
+        return response()->json([
+            'message' => 'Vízi lény nem található',
+        ], 404);
+    }
+    
+    
+
+
     public function napiSorsolas()
     {
         $user = Auth::user();
@@ -69,5 +128,7 @@ class AkvariumController extends Controller
             'vizi_leny' => $viziLeny
         ]);
     }
+
+
     
 }    
