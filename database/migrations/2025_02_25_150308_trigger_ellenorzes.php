@@ -15,12 +15,12 @@ return new class extends Migration
         DB::unprepared('
             DELIMITER $$
 
-            CREATE TRIGGER check_existing_creature
+            CREATE TRIGGER check_letezo_leny
             BEFORE INSERT ON akvaria
             FOR EACH ROW
             BEGIN
                 IF EXISTS (SELECT 1 FROM akvaria WHERE felhasznalo_id = NEW.felhasznalo_id AND vizi_leny_id = NEW.vizi_leny_id) THEN
-                    SIGNAL SQLSTATE "45000" SET MESSAGE_TEXT = "This water creature is already in your aquarium.";
+                    SIGNAL SQLSTATE "45000" SET MESSAGE_TEXT = "Ez a vízi lény már benne van az akváiumban.";
                 END IF;
             END $$
 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS check_existing_creature');
+        DB::unprepared('DROP TRIGGER IF EXISTS check_letezo_leny');
     }
 };
