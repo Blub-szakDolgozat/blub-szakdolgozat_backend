@@ -44,14 +44,21 @@ class UserController extends Controller
         User::find($id)->delete();
     }
 
-    public function getUser()
-    {
-        $user = auth()->user();
-        return response()->json([
-            'message' => 'Sikeres adatlekérés.',
-            'user' => $user // Ezzel visszaküldöd az összes szükséges adatot.
-        ]);
+    public function getUser($id)
+{
+    $user = User::find($id);
+
+    if (!$user) {
+        return response()->json(['message' => 'Felhasználó nem található'], 404);
     }
+
+    return response()->json([
+        'message' => 'Sikeres adatlekérés.',
+        'user' => $user
+    ]);
+}
+
+    
 
 
 
@@ -100,19 +107,6 @@ class UserController extends Controller
 
 
     //nem alap lekérdezések
-    /* public function updatePassword(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            "password" => 'string|min:3|max:50'
-        ]);
-        if ($validator->fails()) {
-            return response()->json(["message" => $validator->errors()->all()], 400);
-        }
-        $user = User::where("id", $id)->update([
-            "password" => Hash::make($request->jelszo),
-        ]);
-        return response()->json(["user" => $user]);
-    } */
 
     function userLendings()
     {
@@ -255,19 +249,24 @@ class UserController extends Controller
             'user' => $user,
         ]);
     }
+    public function updatePassword(Request $request)
+{
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:6|confirmed', // új jelszó + megerősítés
+    ]);
 
-    public function updatePassword(Request $request, $id)
-    {
-        $request->validate([
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+    $user = auth()->user();
 
-        $user = User::find($id);
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        return response()->json([
-            'message' => 'Jelszó frissítve.',
-        ]);
+    // Ellenőrizzük, hogy a jelenlegi jelszó helyes-e
+    if (!Hash::check($request->current_password, $user->password)) {
+        return response()->json(['message' => 'A jelenlegi jelszó hibás.'], 400);
     }
+
+    // Jelszó frissítése
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    return response()->json(['message' => 'Jelszó sikeresen frissítve.']);
+}
 }

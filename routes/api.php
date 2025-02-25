@@ -38,6 +38,9 @@ Route::post('/update-profile-pic', [UserController::class, 'updateProfilePic']);
 Route::post('/update-password', [UserController::class, 'updatePassword']);
 Route::post('/update-user/{user}', [UserController::class, 'update'])->name('update-user');
 
+Route::middleware('auth:sanctum')->get('/get-user/{id}', [UserController::class, 'getUser']);
+Route::middleware('auth:sanctum')->post('/update-password', [UserController::class, 'updatePassword']);
+
 
 
 // Alap lekérdezések --> Cikk
