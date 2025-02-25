@@ -124,4 +124,5 @@ Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']);
 
 
 Route::middleware('auth:sanctum')->post('/napi-sorsolas', [VizilenyekController::class, 'napiSorsolas']);
-
+Route::middleware('auth:sanctum')->get('/random-vizi-leny', [VizilenyekController::class, 'randomViziLeny']);
+Route::middleware('auth:sanctum')->post('/akvarium/sorsol-hozzaad', [VizilenyekController::class, 'sorsolHozzaad']);
