@@ -13,12 +13,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('feliratkozas', function (Blueprint $table) {
+            $table->primary(['felhasznalo', 'esemeny']);
             $table->unsignedBigInteger('felhasznalo'); 
             $table->unsignedBigInteger('esemeny'); 
             $table->timestamp('feliratkozas_datuma')->nullable();
             $table->timestamps();  
 
-            $table->primary(['felhasznalo', 'esemeny']);
+            
 
             // Külső kulcsok definiálása
             $table->foreign('felhasznalo')->references('azonosito')->on('users')->onDelete('cascade');
