@@ -26,27 +26,37 @@ class FeliratkozasController extends Controller
         }
     
         // További kód a feliratkozás kezelésére
-        $felhasznaloId = $request->user()->id;  // Feltételezve, hogy a felhasználói azonosítót így szerzed be
+        $felhasznaloId = Auth::id();  // Feltételezve, hogy a felhasználói azonosítót így szerzed be
     
         // Ellenőrizzük, hogy a felhasználó már feliratkozott-e
-        $existingSubscription = Feliratkozas::where('felhasznalo', $felhasznaloId)
+       /*  $existingSubscription = Feliratkozas::where('felhasznalo', $felhasznaloId)
                                             ->where('esemeny', $esemenyId)
                                             ->first();
         if ($existingSubscription) {
             return response()->json(['error' => 'Már feliratkoztál erre az eseményre.'], 400);
         }
-    
+    */
         // Feliratkozás adatainak tárolása
-        Feliratkozas::create([
+
+        DB::table('feliratkozas')->insert([
             'felhasznalo' => $felhasznaloId,
             'esemeny' => $esemenyId,
             'feliratkozas_datuma' => now(),
         ]);
+
+      /* Feliratkozas::factory()->create([
+            'felhasznalo' => $felhasznaloId,
+            'esemeny' => $esemenyId,
+            'feliratkozas_datuma' => now(),
+        ]);  */
     
         // Frissítjük az esemény létszámát
-        $esemeny->increment('letszam');
+       /*  $esemeny->increment('letszam');  */
     
-        return response()->json(['message' => 'Sikeres feliratkozás!'], 200);
+        return response()->json(['message' => 'Sikeres feliratkozás!'], 200); 
+/*         return response()->json([ 'felhasznalo' => $felhasznaloId,
+        'esemeny' => $esemenyId,
+        'feliratkozas_datuma' => now(),], 200); */
     } 
     
 
