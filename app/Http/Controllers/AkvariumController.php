@@ -29,7 +29,7 @@ class AkvariumController extends Controller
         $user_id=Auth::id();
         $lenyek = DB::table('akvaria as a')
             ->join('vizilenyeks as v', 'a.vizi_leny_id', '=', 'v.vizi_leny_id')
-            ->select('v.nev', 'v.fajta', 'v.ritkasagi_szint')
+            ->select('v.nev', 'v.fajta', 'v.ritkasagi_szint','v.leiras','v.kep')
             ->where('a.felhasznalo_id', '=', $user_id)
             ->get();
         
