@@ -44,41 +44,38 @@ class AkvariumController extends Controller
         ]);
     }
 
-    public function sorsolHozzaad()
+    public function sorsolHozzaad(Request $request)
     {
-        $randomViziLeny = Vizilenyek::inRandomOrder()->first();
+       // $randomViziLeny = Vizilenyek::inRandomOrder()->first();
         
-        if ($randomViziLeny) {
+        
             $userId = auth()->user()->azonosito;
     
             $existsInAquarium = DB::table('akvaria')
                 ->where('felhasznalo_id', $userId)
-                ->where('vizi_leny_id', $randomViziLeny->vizi_leny_id)
+                ->where('vizi_leny_id', $request->vizi_leny_id)
                 ->exists();
     
             if (!$existsInAquarium) {
                 DB::table('akvaria')->insert([
                     'felhasznalo_id' => $userId,
-                    'vizi_leny_id' => $randomViziLeny->vizi_leny_id,
+                    'vizi_leny_id' => $request->vizi_leny_id,
                     'bekerules_ideje' => now(),
                 ]);
 
                 return response()->json([
                     'message' => 'Vízi lény hozzáadva az akváriumhoz',
-                    'vizi_leny' => $randomViziLeny,
+                    'vizi_leny' => Akvaria::all(),
                 ]);
             } else {
 
                 return response()->json([
                     'message' => 'Ez a vízi lény már benne van az akváriumodban',
                 ]);
-            }
+            
         }
     
 
-        return response()->json([
-            'message' => 'Vízi lény nem található',
-        ], 404);
     }
     
     
