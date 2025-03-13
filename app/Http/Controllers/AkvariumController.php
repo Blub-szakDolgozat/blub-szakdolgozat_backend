@@ -65,7 +65,7 @@ class AkvariumController extends Controller
 
                 return response()->json([
                     'message' => 'Vízi lény hozzáadva az akváriumhoz',
-                    'vizi_leny' => Akvaria::all(),
+                    'vizi_leny' => Akvarium::all(),
                 ]);
             } else {
 
