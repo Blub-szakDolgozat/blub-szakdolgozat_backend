@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AkvariumController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CikkController;
 use App\Http\Controllers\EsemenyController;
 use App\Http\Controllers\FeliratkozasController;
@@ -123,6 +125,9 @@ Route::middleware(['auth:sanctum'])
     // Kijelentkezés útvonal
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy']);
 });
+
+Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 
 // Lekérdezések
 Route::get('videok-hossza', [VideoController::class, 'videokHossza']); 
