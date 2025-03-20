@@ -63,39 +63,38 @@ class AkvariumController extends Controller
 
     public function sorsolHozzaad(Request $request)
     {
-       // $randomViziLeny = Vizilenyek::inRandomOrder()->first();
-        
-        
+        // bejelentkezett fh azonosítójának lekérdezése
             $userId = auth()->user()->azonosito;
     
+            // megnézi, hogy az adott lény benne van-e már az adott fh akváriumában
             $existsInAquarium = DB::table('akvaria')
                 ->where('felhasznalo_id', $userId)
                 ->where('vizi_leny_id', $request->vizi_leny_id)
-                ->exists();
+                ->exists(); // ellenőrzi, hogy létezik e a rekord
     
+                // ha nem létezik, akkor hozzáadjuk a fh akváriumához
             if (!$existsInAquarium) {
                 DB::table('akvaria')->insert([
                     'felhasznalo_id' => $userId,
                     'vizi_leny_id' => $request->vizi_leny_id,
                     'bekerules_ideje' => now(),
                 ]);
-
                 return response()->json([
                     'message' => 'Vízi lény hozzáadva az akváriumhoz',
                     'vizi_leny' => Akvarium::all(),
                 ]);
-            } else {
 
+                // ha létezik, akkor ezt az üzenetet adja vissza
+            } else {
                 return response()->json([
                     'message' => 'Ez a vízi lény már benne van az akváriumodban',
                 ]);
-            
         }
-
     }
 
     public function napiSorsolas()
     {
+        // bejelentkezett felhasználó: 
         $user = Auth::user();
         $ma = now()->toDateString(); // mai dátum
         
