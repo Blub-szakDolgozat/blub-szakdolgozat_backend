@@ -37,11 +37,28 @@ class AkvariumController extends Controller
     }
 
     public function randomViziLeny(){
-        $random = Vizilenyek::inRandomOrder()->first(); 
+    $user_id = Auth::id();
 
+    // felhasználó akváriumában lévő lények azonosítói
+    $userLenyek = DB::table('akvaria')
+                    ->where('felhasznalo_id', $user_id)
+                    ->pluck('vizi_leny_id')
+                    ->toArray();
+
+    // Olyan lényt választ, ami még nincs az akváriumban
+    $random = Vizilenyek::whereNotIn('vizi_leny_id', $userLenyek)
+                        ->inRandomOrder()
+                        ->first();
+
+    if ($random) {
         return response()->json([
-        'data' => $random
+            'data' => $random
         ]);
+    } else {
+        return response()->json([
+            'message' => 'Nincs több elérhető lény.'
+        ], 404);
+    }
     }
 
     public function sorsolHozzaad(Request $request)
@@ -74,12 +91,8 @@ class AkvariumController extends Controller
                 ]);
             
         }
-    
 
     }
-    
-    
-
 
     public function napiSorsolas()
     {
