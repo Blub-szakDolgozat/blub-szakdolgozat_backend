@@ -127,6 +127,7 @@ Route::middleware(['auth:sanctum'])
 });
 
 Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
+
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 
 // Lekérdezések
