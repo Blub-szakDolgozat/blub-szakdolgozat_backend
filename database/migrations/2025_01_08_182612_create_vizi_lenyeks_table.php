@@ -30,6 +30,15 @@ return new class extends Migration
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        DB::table('vizilenyeks')->insert([
+            'nev' => 'Alpesi cápa',
+            'fajta' => 'Szárazföldi Cápa',
+            'ritkasagi_szint' => '⭐⭐⭐⭐⭐',
+            'leiras' => 'Egy nagyon ritka cápa faj, ami csak az alpesi hegyekben fordul elő.',
+            'kep' => 'kepek/capaca.jpg',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
 
         DB::table('vizilenyeks')->insert([
             'nev' => 'Leopárdfóka',
