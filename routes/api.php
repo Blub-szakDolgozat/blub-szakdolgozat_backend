@@ -65,6 +65,7 @@ Route::get('/with-example', [VizilenyekController::class, 'withExample']);
 Route::get('/esemenyek', [EsemenyController::class, 'index']);
 
 //Új esemény hozzáadása:
+// Post http kérés
 Route::post('/esemeny-add', [EsemenyController::class, 'store']);
 
 //esemény id alapján törlése:
