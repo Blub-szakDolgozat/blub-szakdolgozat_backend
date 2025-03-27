@@ -34,9 +34,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
         return $request->user();
 });
 
-Route::post('/update-password', [UserController::class, 'updatePassword']);
-Route::post('/update-user/{user}', [UserController::class, 'update'])->name('update-user');
 
+Route::middleware('auth:sanctum')->post('/update-user/{user}', [UserController::class, 'update'])->name('update-user');
 Route::middleware('auth:sanctum')->get('/get-user/{id}', [UserController::class, 'getUser']);
 Route::middleware('auth:sanctum')->post('/update-password', [UserController::class, 'updatePassword']);
 
