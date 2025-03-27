@@ -45,17 +45,10 @@ Route::middleware('auth:sanctum')->post('/update-password', [UserController::cla
 // Cikkeklekérdezése:
 Route::get('/cikkek', [CikkController::class, 'index']);
 
-//Új cikk hozzáadása:
-Route::post('/cikk-add', [CikkController::class, 'store'])->name('cikk.add.store');
-
-//Cikk id alapján törlése:
-Route::delete('/cikk-torol/{cikk_id}', [CikkController::class, 'destroy']);
-
 //Cikk id alapján lekérdezése:
 Route::get('/cikk-show/{cikk_id}', [CikkController::class, 'show']);
 
-//Cikk id alapján részlegesen frissítése:
-Route::put('/cikkek/{cikk_id}', [CikkController::class, 'put']);
+
 Route::get('/with-example', [VizilenyekController::class, 'withExample']);
 
 
@@ -63,11 +56,6 @@ Route::get('/with-example', [VizilenyekController::class, 'withExample']);
 // Események lekérdezése:
 Route::get('/esemenyek', [EsemenyController::class, 'index']);
 
-//Új esemény hozzáadása:
-Route::post('/esemeny-add', [EsemenyController::class, 'store']);
-
-//esemény id alapján törlése:
-Route::delete('/esemeny-torol/{esemény_id}', [EsemenyController::class, 'destroy']);
 
 //esemény id alapján lekérdezése:
 Route::get('/esemeny-show/{esemény_id}', [EsemenyController::class, 'show']);
@@ -80,32 +68,19 @@ Route::put('/esemenyek/{esemény_id}', [EsemenyController::class, 'put']);
 // Videók lekérdezése:
 Route::get('/videok', [VideoController::class, 'index']);
 
-//Új videó hozzáadása:
-Route::post('/video-add', [VideoController::class, 'store'])->name('videok.add.store');
-
-//videó id alapján törlése:
-Route::delete('/video-torol/{video_id}', [VideoController::class, 'destroy']);
-
 //videó id alapján lekérdezése:
 Route::get('/video-show/{video_id}', [VideoController::class, 'show']);
-
-//videó id alapján részlegesen frissítése:
-Route::put('/videok/{video_id}', [VideoController::class, 'put']);
 
 Route::get('/users', [UserController::class, 'index']);
 
 // Vizi lények CRUD
 Route::get('/vizilenyek', [VizilenyekController::class, 'index']);
-Route::post('/vizilenyek-add',[VizilenyekController::class, 'store'])->name('vizilenyek.add.store');
 Route::get('/vizilenyek-megmutat/{id}',[VizilenyekController::class, 'show']);
-Route::put('/vizilenyek/{id}',[VizilenyekController::class, 'update']);
-Route::delete('/vizilenyek-torol/{id}',[VizilenyekController::class, 'destroy']);
+
 //akvarium
 Route::middleware('auth')->get('user-lenyei', [AkvariumController::class, 'userViziLenyei']);
 
-
 Route::post('/esemeny/feliratkozas', [FeliratkozasController::class, 'store']);
-
 
 Route::middleware('auth:sanctum')->delete('/esemeny/{esemeny_id}/feliratkozas', [FeliratkozasController::class, 'destroy']);
 
@@ -113,6 +88,43 @@ Route::middleware('auth:sanctum')->delete('/esemeny/{esemeny_id}/feliratkozas', 
 Route::middleware(['auth:sanctum', Admin::class])
 ->group(function () {
     Route::get('/admin/users', [UserController::class, 'index']);
+
+    //Új esemény hozzáadása:
+    Route::post('/esemeny-add', [EsemenyController::class, 'store']);
+
+    //Új cikk hozzáadása:
+    Route::post('/cikk-add', [CikkController::class, 'store'])->name('cikk.add.store');
+
+    //Cikk id alapján törlése:
+    Route::delete('/cikk-torol/{cikk_id}', [CikkController::class, 'destroy']);
+        
+    //Új videó hozzáadása:
+    Route::post('/video-add', [VideoController::class, 'store'])->name('videok.add.store');
+
+    //esemény id alapján törlése:
+    Route::delete('/esemeny-torol/{esemény_id}', [EsemenyController::class, 'destroy']);
+    Route::post('/vizilenyek-add',[VizilenyekController::class, 'store'])->name('vizilenyek.add.store');
+    Route::put('/vizilenyek/{id}',[VizilenyekController::class, 'update']);
+    Route::delete('/vizilenyek-torol/{id}',[VizilenyekController::class, 'destroy']);
+
+    //Cikk id alapján részlegesen frissítése:
+    Route::put('/cikkek/{cikk_id}', [CikkController::class, 'put']);
+        
+    //videó id alapján törlése:
+    Route::delete('/video-torol/{video_id}', [VideoController::class, 'destroy']);
+
+    //videó id alapján részlegesen frissítése:
+    Route::put('/videok/{video_id}', [VideoController::class, 'put']);
+    
+    // Lekérdezések
+    Route::get('videok-hossza', [VideoController::class, 'videokHossza']); 
+    Route::get('register-order', [UserController::class, 'regisztralasiSorrend']); 
+    Route::get('ritkasagi-szint', [VizilenyekController::class, 'ritkasagiSzint']);
+    Route::get('lenyek-csokkeno/{azonosito}', [AkvariumController::class, 'viziLenyekCsokkenoSorrendben']);
+    Route::get('esemenyre-feliratkozasok/{esemeny_id}', [EsemenyController::class, 'esemenyLetszama']);
+    Route::get('kik-iratkoztak-fel/{esemeny_id}', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
+    Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
+    Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']); 
 });
 
 Route::post('register', [UserController::class, 'register']);
@@ -128,16 +140,6 @@ Route::middleware(['auth:sanctum'])
 Route::post('/reset-password', [ResetPasswordController::class, 'reset']);
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail']);
-
-// Lekérdezések
-Route::get('videok-hossza', [VideoController::class, 'videokHossza']); 
-Route::get('register-order', [UserController::class, 'regisztralasiSorrend']); 
-Route::get('ritkasagi-szint', [VizilenyekController::class, 'ritkasagiSzint']);
-Route::get('lenyek-csokkeno/{azonosito}', [AkvariumController::class, 'viziLenyekCsokkenoSorrendben']);
-Route::get('esemenyre-feliratkozasok/{esemeny_id}', [EsemenyController::class, 'esemenyLetszama']);
-Route::get('kik-iratkoztak-fel/{esemeny_id}', [FeliratkozasController::class, 'esemenyreFeliratkozottak']);
-Route::get('user-feliratkozasai', [FeliratkozasController::class, 'userFeliratkozasai']);
-Route::get('user-lenyei', [AkvariumController::class, 'userViziLenyei']); 
 
 
 Route::middleware('auth:sanctum')->post('/napi-sorsolas', [AkvariumController::class, 'napiSorsolas']);
