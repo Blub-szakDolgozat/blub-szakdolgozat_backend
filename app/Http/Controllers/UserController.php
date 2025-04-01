@@ -77,7 +77,7 @@ class UserController extends Controller
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
             'password' => 'nullable|string|min:8',
-            'profilkep' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'profilkep' => 'nullable|url',
         ]);
 
         // Az adatok frissítése
@@ -90,13 +90,11 @@ class UserController extends Controller
         if ($request->has('password')) {
             $user->password = bcrypt($request->password);
         }
-        if ($request->hasFile('profilkep')) {
-            $image = $request->file('profilkep');
-            $imageName = time().'.'.$image->getClientOriginalExtension();
-            $image->move(public_path('uploads/profile_pics'), $imageName);
-            $user->profilkep = url('uploads/profile_pics/' . $imageName); // 🔹 Elmentjük az URL-t
-        }
+        if ($request->has('profilkep')) {
+            $user->profilkep = $request->profilkep;
 
+
+        }
         // Mentés
         $user->save();
 
