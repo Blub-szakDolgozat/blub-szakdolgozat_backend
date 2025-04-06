@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Vizilenyek::observe(ViziLenyekObserver::class);
         ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
-            return config('app.frontend_url')."/password-reset/$token?email={$notifiable->getEmailForPasswordReset()}";
+            return config('app.frontend_url')."/password-reset?token={$token}&email={$notifiable->getEmailForPasswordReset()}";
         });
     }
 }
